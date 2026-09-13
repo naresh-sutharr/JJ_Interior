@@ -2,7 +2,7 @@ import { createFileRoute, Outlet, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { useState, useEffect } from "react";
-import jayJasolLogo from "@/assets/jay_jasol_logo.jpg";
+import jayJasolLogo from "@/assets/jay_jasol_logo.png";
 
 export const Route = createFileRoute("/_public")({
   component: PublicLayout,
@@ -38,16 +38,19 @@ function PublicLayout() {
         <div className="container mx-auto px-6 grid grid-cols-[auto_1fr_auto] items-center gap-8">
           
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 w-fit cursor-pointer animate-fade-in-up">
+          <Link to="/" className="flex items-center gap-4 w-fit cursor-pointer animate-in fade-in slide-in-from-bottom-4 duration-1000">
             <img 
               src={jayJasolLogo} 
               alt="Jay Jasol Interiors & Modutech Logo" 
-              className="h-16 w-auto object-contain rounded drop-shadow-2xl" 
+              className="h-14 w-auto object-contain drop-shadow-2xl bg-white/10 rounded-sm p-1" 
             />
+            <span className="hidden md:block font-display text-2xl tracking-widest text-white/90">
+              JAY JASOL <span className="text-[#d4af37]">INTERIORS</span>
+            </span>
           </Link>
           
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center justify-center gap-10 animate-fade-in-up delay-100">
+          <nav className="hidden lg:flex items-center justify-center gap-10 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-150 fill-mode-both">
             {navItems.map((item) => (
               <Link
                 key={item.name}
@@ -61,7 +64,7 @@ function PublicLayout() {
           </nav>
           
           {/* Actions */}
-          <div className="flex justify-end gap-4 animate-fade-in-up delay-200">
+          <div className="flex justify-end gap-4 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300 fill-mode-both">
             <Button 
               className="hidden md:flex h-11 rounded-none bg-transparent border border-white/20 text-white hover:bg-white hover:text-black transition-colors px-6 text-[11px] uppercase tracking-[0.18em]" 
               asChild
@@ -87,7 +90,7 @@ function PublicLayout() {
         
         {/* Mobile Navigation Menu */}
         {menuOpen && (
-          <nav className="flex lg:hidden flex-col justify-center gap-8 bg-[#0a0a0a]/98 backdrop-blur-3xl absolute top-full left-0 w-full h-[calc(100vh-80px)] px-8 border-t border-white/10 animate-fade-in-up">
+          <nav className="flex lg:hidden flex-col justify-center gap-8 bg-[#0a0a0a]/98 backdrop-blur-3xl absolute top-full left-0 w-full h-[calc(100vh-80px)] px-8 border-t border-white/10 animate-in fade-in slide-in-from-bottom-4 duration-1000 fill-mode-both">
             {navItems.map((item) => (
               <Link
                 key={item.name}

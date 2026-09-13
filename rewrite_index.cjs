@@ -1,5 +1,8 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowDown, ArrowRight, Star } from "lucide-react";
+﻿const fs = require('fs');
+const file = 'src/routes/_public.index.tsx';
+
+const content = `import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowDown, ArrowRight, ChevronRight, Star } from "lucide-react";
 import heroImage from "@/assets/hero-residence.jpg";
 import residenceImage from "@/assets/project-residence.jpg";
 import villaImage from "@/assets/project-villa.jpg";
@@ -58,7 +61,7 @@ function Index() {
           
           <button 
             onClick={scrollToWork}
-            className="group flex items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-[#d4af37] hover:text-white transition-colors cursor-pointer"
+            className="group flex items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-[#d4af37] hover:text-white transition-colors"
           >
             Explore Our Work
             <ArrowDown className="h-4 w-4 transition-transform group-hover:translate-y-1" />
@@ -148,3 +151,7 @@ function Index() {
     </div>
   );
 }
+`;
+
+fs.writeFileSync(file, content);
+console.log("Updated _public.index.tsx completely.");
