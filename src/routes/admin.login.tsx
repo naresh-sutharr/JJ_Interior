@@ -63,9 +63,19 @@ function AdminLogin() {
         
         // Try signing in again
         const { error: retryError } = await supabase.auth.signInWithPassword({ email, password });
-        if (retryError) throw retryError;
+        if (retryError) {
+           if (retryError.message.toLowerCase().includes("email not confirmed")) {
+              toast.error("Account created! PLEASE CHECK YOUR EMAIL (naresh@gmail.com) and click the confirmation link. Then come back and click Login again.", { duration: 10000 });
+              return;
+           }
+           throw retryError;
+        }
         signInError = null;
       } else if (signInError) {
+        if (signInError.message.toLowerCase().includes("email not confirmed")) {
+           toast.error("PLEASE CHECK YOUR EMAIL (naresh@gmail.com) and click the confirmation link before logging in.", { duration: 10000 });
+           return;
+        }
         throw signInError;
       }
 
@@ -79,7 +89,7 @@ function AdminLogin() {
       toast.success("Welcome back, Admin!");
       navigate({ to: "/admin/dashboard", replace: true });
     } catch (error) {
-      toast.error((error as Error).message);
+      toast.error((error as Error).message, { duration: 5000 });
     } finally {
       setBusy(false);
     }
@@ -101,38 +111,14 @@ function AdminLogin() {
       </section>
 
       <section className="flex items-center justify-center px-6 py-20">
-        <form onSubmit={submit} className="w-full max-w-sm space-y-6">
-          <div className="text-center mb-8">
+        <form onSubmit={submit} className="w-full max-w-sm space-y-6 text-center">
+          <div className="mb-12">
             <p className="text-[10px] uppercase tracking-[.25em] text-muted-foreground">J.J. INTERIORS & MODUTECH</p>
-            <h2 className="mt-3 display-serif text-4xl">Admin Login</h2>
+            <h2 className="mt-3 display-serif text-4xl">Admin Portal</h2>
             <p className="mt-2 text-sm text-muted-foreground">Personal Website - Authorized Access Only</p>
           </div>
 
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">Admin ID</Label>
-              <Input
-                id="email"
-                type="email"
-                value={email}
-                readOnly
-                className="bg-muted text-muted-foreground font-mono"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                readOnly
-                className="bg-muted text-muted-foreground font-mono"
-              />
-            </div>
-          </div>
-
-          <Button type="submit" disabled={busy} className="w-full rounded-none h-12 mt-6 text-[12px] tracking-widest uppercase font-bold">
+          <Button type="submit" disabled={busy} className="w-full rounded-none h-14 mt-8 text-[12px] tracking-widest uppercase font-bold">
             {busy ? "Authenticating..." : "Secure Login"}
           </Button>
           
