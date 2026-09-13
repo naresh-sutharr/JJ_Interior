@@ -21,7 +21,7 @@ function ClientLedger() {
   const clients = dbClients.map(c => ({
     id: c.id,
     name: c.name,
-    city: c.city || 'Vadodara',
+    city: c.city || 'Surat',
     phone: c.phone || '',
     billed: c.total_billed || 0,
     paid: c.total_paid || 0
@@ -79,7 +79,7 @@ function ClientLedger() {
   // Form State
   const [formData, setFormData] = useState({
     name: '',
-    city: 'Vadodara',
+    city: 'Surat',
     phone: '',
     billed: '',
     paid: ''
@@ -117,7 +117,7 @@ function ClientLedger() {
       paid: Number(formData.paid) || 0
     });
 
-    setFormData({ name: '', city: 'Vadodara', phone: '', billed: '', paid: '' });
+    setFormData({ name: '', city: 'Surat', phone: '', billed: '', paid: '' });
     setIsModalOpen(false);
   };
 
@@ -230,7 +230,7 @@ function ClientLedger() {
                           <label className="text-[10px] font-semibold text-slate-400 block mb-0.5">Total Billed</label>
                           <input
                             type="number"
-                            placeholder="Billed (₹)"
+                            placeholder="Billed (â‚¹)"
                             value={editFormData.billed}
                             onChange={(e) => setEditFormData({ ...editFormData, billed: e.target.value })}
                             className="w-full px-3 py-1.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-brand-accent"
@@ -240,7 +240,7 @@ function ClientLedger() {
                           <label className="text-[10px] font-semibold text-slate-400 block mb-0.5">Total Paid</label>
                           <input
                             type="number"
-                            placeholder="Paid (₹)"
+                            placeholder="Paid (â‚¹)"
                             value={editFormData.paid}
                             onChange={(e) => setEditFormData({ ...editFormData, paid: e.target.value })}
                             className="w-full px-3 py-1.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-brand-accent"
@@ -285,18 +285,18 @@ function ClientLedger() {
                       </div>
                       
                       {/* Action buttons (only show on card hover) */}
-                      <div className="opacity-0 group-hover:opacity-100 flex items-center space-x-1 transition-premium bg-white/90 p-1 rounded-lg border border-slate-100 shadow-sm absolute top-4 right-4">
+                      <div className="flex items-center space-x-1 bg-slate-50/80 md:opacity-0 md:group-hover:opacity-100 transition-premium p-1 rounded-xl md:rounded-lg border border-slate-200/60 md:border-slate-100 shadow-sm absolute top-4 right-4">
                         <button
                           onClick={() => handleStartEdit(client)}
                           title="Edit Client"
-                          className="p-1.5 text-slate-500 hover:text-slate-800 hover:bg-slate-50 rounded-md transition-premium"
+                          className="p-2 md:p-1.5 text-slate-500 hover:text-slate-800 hover:bg-white rounded-lg md:rounded-md transition-premium min-h-[40px] min-w-[40px] md:min-h-0 md:min-w-0 flex items-center justify-center"
                         >
                           <Edit3 className="h-4 w-4" />
                         </button>
                         <button
                           onClick={() => deleteClient(client.id)}
                           title="Delete Client"
-                          className="p-1.5 text-brand-red hover:bg-rose-50 rounded-md transition-premium"
+                          className="p-2 md:p-1.5 text-brand-red hover:bg-rose-50 rounded-lg md:rounded-md transition-premium min-h-[40px] min-w-[40px] md:min-h-0 md:min-w-0 flex items-center justify-center"
                         >
                           <Trash2 className="h-4 w-4" />
                         </button>
@@ -337,13 +337,33 @@ function ClientLedger() {
                       </div>
                     </div>
 
-                    {/* Outstanding Due */}
-                    <div className="flex justify-between items-center pt-2 border-t border-slate-100">
-                      <span className="text-xs font-medium text-slate-400">Outstanding Due</span>
-                      <span className={`text-sm font-bold flex items-center ${outstanding > 0 ? 'text-brand-red' : 'text-slate-500'}`}>
-                        <IndianRupee className="h-3.5 w-3.5" />
-                        {outstanding.toLocaleString('en-IN')}
-                      </span>
+                    {/* Outstanding Due & Mobile Actions */}
+                    <div className="flex flex-col gap-3 pt-3 border-t border-slate-100">
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs font-medium text-slate-400">Outstanding Due</span>
+                        <span className={`text-sm font-bold flex items-center ${outstanding > 0 ? 'text-brand-red' : 'text-slate-500'}`}>
+                          <IndianRupee className="h-3.5 w-3.5" />
+                          {outstanding.toLocaleString('en-IN')}
+                        </span>
+                      </div>
+                      
+                      {/* Mobile Quick Action Buttons */}
+                      <div className="grid grid-cols-2 gap-2 mt-1">
+                        <a 
+                          href={`tel:${client.phone}`}
+                          className="flex items-center justify-center gap-2 min-h-[44px] bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-colors"
+                        >
+                          Call
+                        </a>
+                        <a 
+                          href={`https://wa.me/91${client.phone.replace(/\D/g, '')}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="flex items-center justify-center gap-2 min-h-[44px] bg-[#25D366]/10 hover:bg-[#25D366]/20 text-[#128C7E] rounded-xl text-xs font-bold transition-colors"
+                        >
+                          WhatsApp
+                        </a>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -384,7 +404,7 @@ function ClientLedger() {
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Gopalram Suthar"
+                  placeholder="e.g. Mukesh bhai Suthar"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-brand-accent transition-premium"
@@ -411,7 +431,7 @@ function ClientLedger() {
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. Vadodara"
+                    placeholder="e.g. Surat"
                     value={formData.city}
                     onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                     className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-brand-accent transition-premium"
@@ -422,7 +442,7 @@ function ClientLedger() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="text-xs font-semibold text-slate-500 block mb-1">
-                    Total Billed Amount (₹)
+                    Total Billed Amount (â‚¹)
                   </label>
                   <input
                     type="number"
@@ -434,7 +454,7 @@ function ClientLedger() {
                 </div>
                 <div>
                   <label className="text-xs font-semibold text-slate-500 block mb-1">
-                    Amount Paid to Date (₹)
+                    Amount Paid to Date (â‚¹)
                   </label>
                   <input
                     type="number"
@@ -468,6 +488,9 @@ function ClientLedger() {
     </div>
   );
 };
+
+
+
 
 
 

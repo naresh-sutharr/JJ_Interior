@@ -77,13 +77,13 @@ function Settings() {
 
   // Operator Profile Form State
   const [profileData, setProfileData] = useState({
-    name: operatorData?.name || 'Gopalram P. Suthar',
+    name: operatorData?.name || 'Mukesh bhai Suthar',
     role: operatorData?.role || 'Authorized Operator',
-    businessName: operatorData?.businessName || 'Tulsi Interior',
-    address: operatorData?.address || '148, Randaldham Socity, Chanakyapuri, New Sama Road, VADODARA - 390008',
+    businessName: operatorData?.businessName || 'J.J. INTERIORS & MODUTECH',
+    address: operatorData?.address || 'Surat, Surat - 390008',
     phone: operatorData?.phone || '94270549218',
     panCard: operatorData?.panCard || 'CMYPS4786H',
-    jurisdiction: operatorData?.jurisdiction || 'Vadodara'
+    jurisdiction: operatorData?.jurisdiction || 'Surat'
   });
 
   // Handle Profile Submit
@@ -381,6 +381,7 @@ function Settings() {
       </div>
   );
 };
+
 
 
 

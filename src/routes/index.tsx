@@ -10,12 +10,17 @@ import bespokeImage from "@/assets/project-bespoke.jpg";
 import portraitImage from "@/assets/studio-portrait.jpg";
 import materialImage from "@/assets/material-study.jpg";
 
+import jjLogo from "@/assets/jj_logo.jpg";
+import mukeshPhoto from "@/assets/mukesh_photo1.jpg";
+import { useRows } from "@/hooks/use-admin";
+
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Tulsi Interior — Luxury Interior Design" },
-      { name: "description", content: "Tulsi Interior creates timeless luxury interiors shaped by architecture, material, and emotion." },
-      { property: "og:title", content: "Tulsi Interior — Luxury Interior Design" },
+      { title: "J.J. INTERIORS & MODUTECH — Luxury Interior Design" },
+      { name: "description", content: "J.J. INTERIORS & MODUTECH creates timeless luxury interiors shaped by architecture, material, and emotion." },
+      { property: "og:title", content: "J.J. INTERIORS & MODUTECH — Luxury Interior Design" },
       { property: "og:description", content: "Timeless residential and commercial interiors, designed with purpose and crafted in detail." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -53,6 +58,13 @@ function usePageEffects() {
 
 function Index() {
   const scrolled = usePageEffects();
+  const dynamicProjects: any[] = []; // Disabled useRows for public until RLS is fixed
+
+  // Combine dynamic projects with defaults if none exist yet
+  const projects = dynamicProjects.length > 0 ? dynamicProjects : [
+    { name: "The Aster Residence", location: "Mumbai", year: "2026", type: "Luxury Residence", image: residenceImage, vertical: true },
+    { name: "Villa Sereno", location: "Goa", year: "2025", type: "Modern Villa", image: villaImage, vertical: false },
+  ];
   const [menuOpen, setMenuOpen] = useState(false);
   const [serviceIndex, setServiceIndex] = useState(0);
   const scrollTo = (id: string) => { document.getElementById(id.toLowerCase())?.scrollIntoView({ behavior: "smooth" }); setMenuOpen(false); };
@@ -61,13 +73,16 @@ function Index() {
     <main>
       <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled ? "border-b border-border bg-background/95 text-foreground backdrop-blur" : "text-hero-foreground"}`}>
         <div className="section-shell grid h-20 grid-cols-[minmax(0,1fr)_auto] items-center md:h-24 md:grid-cols-[1fr_auto_1fr]">
-          <button onClick={() => scrollTo("home")} className="w-fit cursor-pointer text-left display-serif text-xl tracking-normal md:text-2xl" aria-label="Tulsi Interior home">TULSI INTERIOR</button>
+          <button onClick={() => scrollTo("home")} className="flex items-center gap-3 w-fit cursor-pointer text-left display-serif text-xl tracking-normal md:text-2xl" aria-label="J.J. INTERIORS & MODUTECH home">
+            <img src={jjLogo} alt="J.J. Interiors Logo" className="h-12 w-auto object-contain rounded" />
+            <span className="hidden md:inline-block">J.J. INTERIORS & MODUTECH</span>
+          </button>
           <nav className="hidden items-center gap-8 md:flex" aria-label="Main navigation">
             {navItems.map((item) => <button key={item} onClick={() => scrollTo(item)} className="cursor-pointer text-[11px] uppercase tracking-[.2em] transition-opacity hover:opacity-55">{item}</button>)}
           </nav>
           <div className="flex justify-end gap-3">
-            <Button variant="ghost" className="hidden h-10 px-4 text-[10px] uppercase tracking-[.18em] text-champagne hover:text-champagne/80 hover:bg-transparent md:inline-flex" asChild>
-              <a href="/admin/login">Admin Portal</a>
+            <Button className="hidden h-10 rounded-full bg-gradient-to-r from-amber-600 to-amber-900 text-white shadow-lg shadow-amber-900/40 border-0 px-6 text-[10px] font-bold uppercase tracking-[.18em] hover:scale-105 transition-all duration-300 md:inline-flex" asChild>
+              <a href="/admin/login">Admin Portal ✨</a>
             </Button>
             <Button variant={scrolled ? "outline" : "inverse"} className="hidden h-10 rounded-none px-5 text-[10px] uppercase tracking-[.18em] md:inline-flex" onClick={() => scrollTo("contact")}>Start a Project</Button>
             <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? "Close menu" : "Open menu"}>{menuOpen ? <X /> : <Menu />}</Button>
@@ -92,7 +107,7 @@ function Index() {
       <section id="about" className="section-shell py-28 md:py-44">
         <div className="grid gap-16 md:grid-cols-12 md:items-end">
           <div className="reveal md:col-span-8"><p className="mb-8 text-[10px] uppercase tracking-[.25em] text-muted-foreground">01 · The Studio</p><h2 className="display-serif text-[clamp(2.8rem,6vw,6.2rem)] leading-[.96]">WE DON'T JUST DESIGN INTERIORS.<br /><span className="text-muted-foreground">WE CREATE EXPERIENCES.</span></h2></div>
-          <div className="reveal space-y-7 md:col-span-4 md:pb-2"><p className="text-sm font-light leading-7 text-muted-foreground">Tulsi Interior is an interior architecture studio composing enduring spaces through proportion, light and exceptional materials. Every project is considered as a complete sensory experience.</p><Button variant="editorial" onClick={() => scrollTo("studio")}>Discover Our Story <ArrowRight /></Button></div>
+          <div className="reveal space-y-7 md:col-span-4 md:pb-2"><p className="text-sm font-light leading-7 text-muted-foreground">J.J. INTERIORS & MODUTECH is an interior architecture studio composing enduring spaces through proportion, light and exceptional materials. Every project is considered as a complete sensory experience.</p><Button variant="editorial" onClick={() => scrollTo("studio")}>Discover Our Story <ArrowRight /></Button></div>
         </div>
         <div className="reveal mt-20 ml-auto w-full overflow-hidden md:mt-28 md:w-4/5"><img src={materialImage} alt="Travertine, boucle, smoked glass and brass material palette" width={1408} height={1008} loading="lazy" className="aspect-[16/9] w-full object-cover transition-transform duration-1000 hover:scale-[1.025]" /></div>
       </section>
@@ -107,7 +122,7 @@ function Index() {
       </section>
 
       <section id="studio" className="grid bg-card md:grid-cols-2">
-        <div className="reveal min-h-[65vh] overflow-hidden"><img src={portraitImage} alt="Creative director in Aurelia Studio's material library" width={1104} height={1504} loading="lazy" className="h-full w-full object-cover object-center" /></div>
+        <div className="reveal min-h-[65vh] overflow-hidden"><img src={mukeshPhoto} alt="Mukesh bhai Suthar in Aurelia Studio's material library" width={1104} height={1504} loading="lazy" className="h-full w-full object-cover object-center" /></div>
         <div className="reveal flex items-center px-6 py-24 sm:px-12 md:px-[10%] md:py-32"><div><p className="mb-10 text-[10px] uppercase tracking-[.25em] text-muted-foreground">03 · Our Philosophy</p><h2 className="display-serif text-5xl leading-[1.02] md:text-7xl">DESIGNING WITH PURPOSE.<br />CRAFTING WITH DETAIL.</h2><p className="mt-10 max-w-xl text-sm font-light leading-7 text-muted-foreground">Led by our creative director, our studio works at the intersection of interior, architecture and collectible design. We seek quiet confidence over spectacle—spaces that become richer with time.</p><Button variant="editorial" className="mt-10" onClick={() => scrollTo("process")}>Our Philosophy <ArrowRight /></Button></div></div>
       </section>
 
@@ -121,11 +136,13 @@ function Index() {
 
       <section className="section-shell py-28 md:py-44"><div className="reveal mb-16 md:flex md:items-end md:justify-between"><div><p className="mb-5 text-[10px] uppercase tracking-[.25em] text-muted-foreground">06 · Details & Atmosphere</p><h2 className="display-serif text-5xl md:text-7xl">A Study in Material</h2></div></div><div className="grid grid-cols-2 items-start gap-3 md:grid-cols-12 md:gap-6"><img src={villaImage} alt="Sunlit limestone villa courtyard" width={1600} height={1104} loading="lazy" className="reveal col-span-2 aspect-[4/3] w-full object-cover md:col-span-7" /><img src={bespokeImage} alt="Custom walnut dressing room" width={1200} height={1504} loading="lazy" className="reveal aspect-[3/4] w-full object-cover md:col-span-4 md:col-start-9 md:mt-28" /><img src={materialImage} alt="Luxury natural material study" width={1408} height={1008} loading="lazy" className="reveal aspect-square w-full object-cover md:col-span-4 md:col-start-2 md:-mt-20" /><img src={officeImage} alt="Dark oak executive office" width={1600} height={1104} loading="lazy" className="reveal col-span-2 aspect-[16/10] w-full object-cover md:col-span-6 md:col-start-7 md:mt-16" /></div></section>
 
-      <section className="bg-stone py-28 md:py-44"><div className="section-shell reveal mx-auto max-w-5xl text-center"><p className="mb-12 text-[10px] uppercase tracking-[.25em] text-muted-foreground">Client Perspective</p><blockquote className="display-serif text-[clamp(2.1rem,4.5vw,5rem)] leading-[1.12]">“Tulsi Interior understood that true luxury is not excess. It is the feeling that every detail belongs exactly where it is.”</blockquote><p className="mt-10 text-[10px] uppercase tracking-[.22em]">Private Residence · Mumbai</p></div></section>
+      <section className="bg-stone py-28 md:py-44"><div className="section-shell reveal mx-auto max-w-5xl text-center"><p className="mb-12 text-[10px] uppercase tracking-[.25em] text-muted-foreground">Client Perspective</p><blockquote className="display-serif text-[clamp(2.1rem,4.5vw,5rem)] leading-[1.12]">“J.J. INTERIORS & MODUTECH understood that true luxury is not excess. It is the feeling that every detail belongs exactly where it is.”</blockquote><p className="mt-10 text-[10px] uppercase tracking-[.22em]">Private Residence · Mumbai</p></div></section>
 
-      <section id="contact" className="relative min-h-[85vh] overflow-hidden bg-hero text-hero-foreground"><img src={heroImage} alt="Tulsi Interior luxury residence at dusk" width={1920} height={1088} loading="lazy" className="absolute inset-0 h-full w-full scale-105 object-cover opacity-25" /><div className="section-shell relative flex min-h-[85vh] flex-col justify-center py-28"><div className="reveal"><p className="mb-8 text-[10px] uppercase tracking-[.25em] text-champagne">Begin a Conversation</p><h2 className="display-serif text-[clamp(3.5rem,9vw,8.5rem)] leading-[.88]">LET'S CREATE<br />SOMETHING TIMELESS.</h2><div className="mt-14 flex flex-wrap gap-x-8 gap-y-5"><a href="mailto:studio@tulsiinterior.com" className="group flex items-center gap-2 border-b border-hero-foreground/50 pb-2 text-xs uppercase tracking-[.18em]">Start a Project <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" /></a><a href="https://wa.me/919876543210" className="border-b border-hero-foreground/50 pb-2 text-xs uppercase tracking-[.18em]">WhatsApp</a><a href="tel:+919876543210" className="border-b border-hero-foreground/50 pb-2 text-xs uppercase tracking-[.18em]">Phone</a><a href="mailto:studio@tulsiinterior.com" className="border-b border-hero-foreground/50 pb-2 text-xs uppercase tracking-[.18em]">Email</a></div></div></div></section>
+      <section id="contact" className="relative min-h-[85vh] overflow-hidden bg-hero text-hero-foreground"><img src={heroImage} alt="J.J. INTERIORS & MODUTECH luxury residence at dusk" width={1920} height={1088} loading="lazy" className="absolute inset-0 h-full w-full scale-105 object-cover opacity-25" /><div className="section-shell relative flex min-h-[85vh] flex-col justify-center py-28"><div className="reveal"><p className="mb-8 text-[10px] uppercase tracking-[.25em] text-champagne">Begin a Conversation</p><h2 className="display-serif text-[clamp(3.5rem,9vw,8.5rem)] leading-[.88]">LET'S CREATE<br />SOMETHING TIMELESS.</h2><div className="mt-14 flex flex-wrap gap-x-8 gap-y-5"><a href="mailto:studio@jjinteriors.com" className="group flex items-center gap-2 border-b border-hero-foreground/50 pb-2 text-xs uppercase tracking-[.18em]">Start a Project <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" /></a><a href="https://wa.me/919876543210" className="border-b border-hero-foreground/50 pb-2 text-xs uppercase tracking-[.18em]">WhatsApp</a><a href="tel:+919876543210" className="border-b border-hero-foreground/50 pb-2 text-xs uppercase tracking-[.18em]">Phone</a><a href="mailto:studio@jjinteriors.com" className="border-b border-hero-foreground/50 pb-2 text-xs uppercase tracking-[.18em]">Email</a></div></div></div></section>
 
-      <footer className="bg-hero px-4 pb-10 text-hero-foreground"><div className="section-shell border-t border-hero-foreground/20 pt-12"><div className="grid gap-12 md:grid-cols-4"><div><p className="display-serif text-3xl">TULSI INTERIOR</p><p className="mt-3 text-[10px] uppercase tracking-[.2em] text-hero-foreground/45">Interior Architecture Studio</p></div><div className="space-y-3 text-xs">{navItems.map((item) => <button key={item} onClick={() => scrollTo(item)} className="block cursor-pointer hover:opacity-55">{item}</button>)}</div><div className="space-y-3 text-xs"><a className="block hover:opacity-55" href="https://instagram.com">Instagram</a><a className="block hover:opacity-55" href="https://wa.me/919876543210">WhatsApp</a><a className="block hover:opacity-55" href="mailto:studio@tulsiinterior.com">studio@tulsiinterior.com</a></div><div className="text-xs leading-6 text-hero-foreground/65">Mumbai, India<br />Projects Worldwide<br /><br /><a href="/admin/login" className="hover:text-champagne transition-colors">Admin Portal →</a></div></div><div className="mt-16 flex flex-col gap-3 border-t border-hero-foreground/20 pt-6 text-[9px] uppercase tracking-[.18em] text-hero-foreground/40 sm:flex-row sm:justify-between"><p>© 2026 Tulsi Interior</p><p>Spaces with enduring soul</p></div></div></footer>
+      <footer className="bg-hero px-4 pb-10 text-hero-foreground"><div className="section-shell border-t border-hero-foreground/20 pt-12"><div className="grid gap-12 md:grid-cols-4"><div><p className="display-serif text-3xl">J.J. INTERIORS & MODUTECH</p><p className="mt-3 text-[10px] uppercase tracking-[.2em] text-hero-foreground/45">Interior Architecture Studio</p></div><div className="space-y-3 text-xs">{navItems.map((item) => <button key={item} onClick={() => scrollTo(item)} className="block cursor-pointer hover:opacity-55">{item}</button>)}</div><div className="space-y-3 text-xs"><a className="block hover:opacity-55" href="https://instagram.com">Instagram</a><a className="block hover:opacity-55" href="https://wa.me/919876543210">WhatsApp</a><a className="block hover:opacity-55" href="mailto:studio@jjinteriors.com">studio@jjinteriors.com</a></div><div className="text-xs leading-6 text-hero-foreground/65">Mumbai, India<br />Projects Worldwide<br /><br /><a href="/admin/login" className="hover:text-champagne transition-colors">Admin Portal →</a></div></div><div className="mt-16 flex flex-col gap-3 border-t border-hero-foreground/20 pt-6 text-[9px] uppercase tracking-[.18em] text-hero-foreground/40 sm:flex-row sm:justify-between"><p>© 2026 J.J. INTERIORS & MODUTECH</p><p>Spaces with enduring soul</p></div></div></footer>
     </main>
   );
 }
+
+

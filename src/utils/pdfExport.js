@@ -259,7 +259,7 @@ const sanitizeCssColorsInDoc = (clonedDoc, elementId) => {
 };
 
 /**
- * High resolution vector/image PDF generator utility for Tulsi Interior invoices.
+ * High resolution vector/image PDF generator utility for J.J. INTERIORS & MODUTECH invoices.
  * Ensures compatibility across Vite bundling, default exports, and offscreen rendering.
  */
 export const downloadPDF = async (elementId, filename = 'invoice.pdf') => {
@@ -342,3 +342,4 @@ export const downloadPDF = async (elementId, filename = 'invoice.pdf') => {
     return false;
   }
 };
+

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useRows, useBusinessProfile } from "@/hooks/use-admin";
 
@@ -30,10 +30,10 @@ function InvoicesArchive() {
   }));
 
   const operatorSettings = operatorData || {
-    name: 'Gopalram P. Suthar',
+    name: 'Mukesh bhai Suthar',
     phone: '94270549218',
-    address: '148, RANDALDHAM SOCIETY, CHANAKYAPURI, NEW SAMA ROAD, VADODARA - 390008',
-    businessName: 'TULSI INTERIOR'
+    address: '148, RANDALDHAM SOCIETY, CHANAKYAPURI, NEW SAMA ROAD, Surat - 390008',
+    businessName: 'J.J. INTERIORS & MODUTECH'
   };
 
   const setDraftInvoice = () => {
@@ -75,7 +75,7 @@ function InvoicesArchive() {
   };
 
   const handleShareInvoice = async (inv) => {
-    const text = `*${operatorSettings?.businessName || 'TULSI INTERIOR'}*\n\nBill No: ${inv.invoiceNo}\nClient: ${inv.clientName}\nDate: ${inv.date.split('-').reverse().join('/')}\nTotal Amount: ₹${inv.totalAmount.toLocaleString('en-IN')}\n\nThank you for your business!`;
+    const text = `*${operatorSettings?.businessName || 'J.J. INTERIORS & MODUTECH'}*\n\nBill No: ${inv.invoiceNo}\nClient: ${inv.clientName}\nDate: ${inv.date.split('-').reverse().join('/')}\nTotal Amount: â‚¹${inv.totalAmount.toLocaleString('en-IN')}\n\nThank you for your business!`;
     
     if (navigator.share) {
       try {
@@ -162,13 +162,13 @@ function InvoicesArchive() {
                           className="select-none text-[28px] font-semibold text-brand-red leading-tight"
                           style={{ fontFamily: "'Times New Roman', Times, serif" }}
                         >
-                          Tulsi Interior
+                          J.J. INTERIORS & MODUTECH
                         </h1>
                         <div className="text-slate-900 font-display font-black text-[10px] tracking-[0.25em] uppercase mt-0.5 leading-none select-none">
                           WOODEN FURNITURE MAKERS
                         </div>
                         <div className="text-[8px] text-slate-800 font-bold mt-1.5 uppercase select-none tracking-widest text-center">
-                          {operatorSettings?.address || '148, RANDALDHAM SOCIETY, CHANAKYAPURI, NEW SAMA ROAD, VADODARA - 390008'}
+                          {operatorSettings?.address || '148, RANDALDHAM SOCIETY, CHANAKYAPURI, NEW SAMA ROAD, Surat - 390008'}
                         </div>
                       </div>
 
@@ -192,7 +192,7 @@ function InvoicesArchive() {
                       <div className="flex items-center">
                         <span className="font-bold text-slate-700 w-16 flex-shrink-0">Address:</span>
                         <div className="flex-1 text-slate-800 border-b border-slate-300 pb-[2px] pl-1 min-h-[14px] text-left uppercase">
-                          {inv.clientAddress || 'VADODARA'}
+                          {inv.clientAddress || 'Surat'}
                         </div>
                       </div>
 
@@ -249,7 +249,7 @@ function InvoicesArchive() {
                             <tr key={`sec-${rIdx}`} className="bg-slate-100 border-t border-b border-slate-900 break-inside-avoid">
                               <td className="border-r border-slate-900 py-1 text-center align-middle"></td>
                               <td className="border-r border-slate-900 py-1 text-center text-slate-900 font-extrabold uppercase tracking-wider text-[9.5px] align-middle">
-                                ❖ {row.name}
+                                â– {row.name}
                               </td>
                               <td className="border-r border-slate-900"></td>
                               <td className="border-r border-slate-900"></td>
@@ -292,14 +292,14 @@ function InvoicesArchive() {
                   {/* Total Row */}
                   <div className="border border-slate-900 flex justify-between items-center px-4 py-1.5 bg-slate-50 font-extrabold text-[11.5px]">
                     <span className="uppercase text-slate-800 tracking-wider">TOTAL BILL AMOUNT</span>
-                    <span className="font-extrabold text-slate-900 text-base">₹{inv.totalAmount.toLocaleString('en-IN')}.00</span>
+                    <span className="font-extrabold text-slate-900 text-base">â‚¹{inv.totalAmount.toLocaleString('en-IN')}.00</span>
                   </div>
 
                   {/* Print signature footer details matching user reference image */}
                   <div className="w-full border border-slate-900 p-2 flex justify-between items-end text-[9px] select-none bg-white">
                     <div className="space-y-0.5">
                       <div className="text-slate-800 font-bold">
-                        Subject to {operatorSettings?.jurisdiction || 'Vadodara'} Jurisdiction.
+                        Subject to {operatorSettings?.jurisdiction || 'Surat'} Jurisdiction.
                       </div>
                       {inv.billType === 'Pakka' && (
                         <div className="font-extrabold text-slate-900">
@@ -321,7 +321,7 @@ function InvoicesArchive() {
 
                     <div className="text-right pt-10">
                       <div className="font-extrabold text-slate-900 text-[9.5px]">
-                        For {operatorSettings?.name || 'Gopalram P. Suthar'}
+                        For {operatorSettings?.name || 'Mukesh bhai Suthar'}
                       </div>
                       <div className="text-[8px] font-bold text-slate-600 uppercase tracking-wider">
                         {operatorSettings?.role || 'AUTHORIZED OPERATOR'}
@@ -434,7 +434,7 @@ function InvoicesArchive() {
                 <div>
                   <span className="text-[10px] text-slate-400 uppercase font-medium block">Total Sum</span>
                   <span className="text-sm font-extrabold text-slate-800 dark:text-slate-200">
-                    ₹{inv.totalAmount.toLocaleString('en-IN')}/-
+                    â‚¹{inv.totalAmount.toLocaleString('en-IN')}/-
                   </span>
                 </div>
                 <div className="flex items-center gap-1">
@@ -447,21 +447,21 @@ function InvoicesArchive() {
                   </button>
                   <button
                     onClick={() => handleEditInvoice(inv)}
-                    className="p-2 bg-amber-50 hover:bg-amber-100 text-amber-600 dark:bg-amber-900/20 dark:hover:bg-amber-900/40 dark:text-amber-400 border border-amber-200/50 dark:border-amber-800 rounded-xl transition-premium cursor-pointer"
+                    className="min-h-[44px] min-w-[44px] flex items-center justify-center p-2 bg-amber-50 hover:bg-amber-100 text-amber-600 dark:bg-amber-900/20 dark:hover:bg-amber-900/40 dark:text-amber-400 border border-amber-200/50 dark:border-amber-800 rounded-xl transition-premium cursor-pointer"
                     title="Edit Invoice"
                   >
                     <Edit2 className="h-4 w-4" />
                   </button>
                   <button
                     onClick={() => setSelectedInvoice(inv)}
-                    className="p-2 bg-brand-beige/65 hover:bg-brand-beige text-brand-accent-dark dark:text-brand-accent dark:bg-slate-800 border border-brand-accent/20 dark:border-slate-700 rounded-xl transition-premium cursor-pointer"
+                    className="min-h-[44px] min-w-[44px] flex items-center justify-center p-2 bg-brand-beige/65 hover:bg-brand-beige text-brand-accent-dark dark:text-brand-accent dark:bg-slate-800 border border-brand-accent/20 dark:border-slate-700 rounded-xl transition-premium cursor-pointer"
                     title="View A4 Preview"
                   >
                     <Eye className="h-4 w-4" />
                   </button>
                   <button
                     onClick={() => handleDownloadPastPDF(inv)}
-                    className="p-2 bg-slate-800 hover:bg-slate-900 text-white dark:bg-slate-700 dark:hover:bg-slate-600 rounded-xl transition-premium cursor-pointer"
+                    className="min-h-[44px] min-w-[44px] flex items-center justify-center p-2 bg-slate-800 hover:bg-slate-900 text-white dark:bg-slate-700 dark:hover:bg-slate-600 rounded-xl transition-premium cursor-pointer"
                     title="Download high-res PDF"
                   >
                     <Download className="h-4 w-4" />
@@ -506,6 +506,8 @@ function InvoicesArchive() {
     </div>
   );
 };
+
+
 
 
 

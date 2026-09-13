@@ -199,6 +199,7 @@ function Billing() {
 
   // Auto-calculated next sequential Bill No
   const [billNo, setBillNo] = useState('');
+  const [mobileStep, setMobileStep] = useState(1);
   
   useEffect(() => {
     setBillNo(getNextInvoiceNo(billType));
