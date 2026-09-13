@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useRows, useBusinessProfile } from "@/hooks/use-admin";
 
@@ -33,7 +33,7 @@ function InvoicesArchive() {
     name: 'Mukesh bhai Suthar',
     phone: '94270549218',
     address: '148, RANDALDHAM SOCIETY, CHANAKYAPURI, NEW SAMA ROAD, Surat - 390008',
-    businessName: 'J.J. INTERIORS & MODUTECH'
+    businessName: 'JAY JASOL INTERIORS & MODUTECH'
   };
 
   const setDraftInvoice = () => {
@@ -75,7 +75,7 @@ function InvoicesArchive() {
   };
 
   const handleShareInvoice = async (inv) => {
-    const text = `*${operatorSettings?.businessName || 'J.J. INTERIORS & MODUTECH'}*\n\nBill No: ${inv.invoiceNo}\nClient: ${inv.clientName}\nDate: ${inv.date.split('-').reverse().join('/')}\nTotal Amount: â‚¹${inv.totalAmount.toLocaleString('en-IN')}\n\nThank you for your business!`;
+    const text = `*${operatorSettings?.businessName || 'JAY JASOL INTERIORS & MODUTECH'}*\n\nBill No: ${inv.invoiceNo}\nClient: ${inv.clientName}\nDate: ${inv.date.split('-').reverse().join('/')}\nTotal Amount: ₹${inv.totalAmount.toLocaleString('en-IN')}\n\nThank you for your business!`;
     
     if (navigator.share) {
       try {
@@ -162,7 +162,7 @@ function InvoicesArchive() {
                           className="select-none text-[28px] font-semibold text-brand-red leading-tight"
                           style={{ fontFamily: "'Times New Roman', Times, serif" }}
                         >
-                          J.J. INTERIORS & MODUTECH
+                          JAY JASOL INTERIORS & MODUTECH
                         </h1>
                         <div className="text-slate-900 font-display font-black text-[10px] tracking-[0.25em] uppercase mt-0.5 leading-none select-none">
                           WOODEN FURNITURE MAKERS
@@ -249,7 +249,7 @@ function InvoicesArchive() {
                             <tr key={`sec-${rIdx}`} className="bg-slate-100 border-t border-b border-slate-900 break-inside-avoid">
                               <td className="border-r border-slate-900 py-1 text-center align-middle"></td>
                               <td className="border-r border-slate-900 py-1 text-center text-slate-900 font-extrabold uppercase tracking-wider text-[9.5px] align-middle">
-                                â– {row.name}
+                                ❖ {row.name}
                               </td>
                               <td className="border-r border-slate-900"></td>
                               <td className="border-r border-slate-900"></td>
@@ -292,7 +292,7 @@ function InvoicesArchive() {
                   {/* Total Row */}
                   <div className="border border-slate-900 flex justify-between items-center px-4 py-1.5 bg-slate-50 font-extrabold text-[11.5px]">
                     <span className="uppercase text-slate-800 tracking-wider">TOTAL BILL AMOUNT</span>
-                    <span className="font-extrabold text-slate-900 text-base">â‚¹{inv.totalAmount.toLocaleString('en-IN')}.00</span>
+                    <span className="font-extrabold text-slate-900 text-base">₹{inv.totalAmount.toLocaleString('en-IN')}.00</span>
                   </div>
 
                   {/* Print signature footer details matching user reference image */}
@@ -434,7 +434,7 @@ function InvoicesArchive() {
                 <div>
                   <span className="text-[10px] text-slate-400 uppercase font-medium block">Total Sum</span>
                   <span className="text-sm font-extrabold text-slate-800 dark:text-slate-200">
-                    â‚¹{inv.totalAmount.toLocaleString('en-IN')}/-
+                    ₹{inv.totalAmount.toLocaleString('en-IN')}/-
                   </span>
                 </div>
                 <div className="flex items-center gap-1">

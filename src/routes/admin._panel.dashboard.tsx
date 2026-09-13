@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useRows, useBusinessProfile } from "@/hooks/use-admin";
 import { toast } from "sonner";
@@ -31,7 +31,7 @@ function Dashboard() {
   const operatorSettings = operatorData || {
     name: 'Mukesh bhai Suthar',
     role: 'Authorized Operator',
-    businessName: 'J.J. INTERIORS & MODUTECH',
+    businessName: 'JAY JASOL INTERIORS & MODUTECH',
     address: 'Surat, Surat - 390008',
     phone: '94270549218',
     panCard: 'CMYPS4786H',
@@ -133,7 +133,7 @@ function Dashboard() {
                           className="select-none text-[28px] font-semibold text-brand-red leading-tight"
                           style={{ fontFamily: "'Times New Roman', Times, serif" }}
                         >
-                          J.J. INTERIORS & MODUTECH
+                          JAY JASOL INTERIORS & MODUTECH
                         </h1>
                         <div className="text-slate-900 font-display font-black text-[10px] tracking-[0.25em] uppercase mt-0.5 leading-none select-none">
                           WOODEN FURNITURE MAKERS
@@ -220,7 +220,7 @@ function Dashboard() {
                             <tr key={`sec-${rIdx}`} className="bg-slate-100 border-t border-b border-slate-900 break-inside-avoid">
                               <td className="border-r border-slate-900 py-1 text-center align-middle"></td>
                               <td className="border-r border-slate-900 py-1 text-center text-slate-900 font-extrabold uppercase tracking-wider text-[9.5px] align-middle">
-                                â– {row.name}
+                                ❖ {row.name}
                               </td>
                               <td className="border-r border-slate-900"></td>
                               <td className="border-r border-slate-900"></td>
@@ -263,7 +263,7 @@ function Dashboard() {
                   {/* Total Row */}
                   <div className="border border-slate-900 flex justify-between items-center px-4 py-1.5 bg-slate-50 font-extrabold text-[11.5px]">
                     <span className="uppercase text-slate-800 tracking-wider">TOTAL BILL AMOUNT</span>
-                    <span className="font-extrabold text-slate-900 text-base">â‚¹{inv.totalAmount.toLocaleString('en-IN')}.00</span>
+                    <span className="font-extrabold text-slate-900 text-base">₹{inv.totalAmount.toLocaleString('en-IN')}.00</span>
                   </div>
 
                   {/* Print signature footer details matching user reference image */}
@@ -337,7 +337,7 @@ function Dashboard() {
           </div>
           
           <h1 className="text-2xl md:text-3xl font-extrabold font-display text-white tracking-wide leading-tight">
-            J.J. INTERIORS & MODUTECH Ledger
+            JAY JASOL INTERIORS & MODUTECH Ledger
           </h1>
           
           {/* Cursive greeting text */}
@@ -345,7 +345,7 @@ function Dashboard() {
             className="text-xl md:text-2xl font-bold text-[var(--brand-accent)] mt-1.5 select-none drop-shadow-md"
             style={{ fontFamily: "'Dancing Script', cursive" }}
           >
-            Welcome, {operatorSettings?.name?.split(' ')[0] || 'Mukesh bhai'}! âœ¨
+            Welcome, {operatorSettings?.name?.split(' ')[0] || 'Mukesh bhai'}! ✨
           </p>
           <p className="text-gray-400 text-xs mt-2.5 md:mt-3 max-w-lg font-medium leading-relaxed">
             Crafting premium spaces & custom wooden furniture since 1998. Monitor your client accounts, billings, and cashflow in real-time.
@@ -358,7 +358,7 @@ function Dashboard() {
         >
           <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out"></div>
           <span className="relative z-10 flex items-center gap-2">
-            Create New Bill ðŸ“ <ArrowRight className="h-4 w-4 md:h-5 md:w-5" />
+            Create New Bill 📝 <ArrowRight className="h-4 w-4 md:h-5 md:w-5" />
           </span>
         </button>
       </div>
@@ -369,7 +369,7 @@ function Dashboard() {
         <div className="glass-card glass-card-hover p-5 md:p-6 flex items-center justify-between group min-w-[85vw] snap-center md:min-w-0 flex-shrink-0">
           <div className="space-y-1.5 md:space-y-2">
             <span className="text-[10px] md:text-xs font-bold text-[var(--text-secondary)] uppercase tracking-[0.15em] block">
-              Total Clients ðŸ‘¥
+              Total Clients 👥
             </span>
             <span className="text-3xl md:text-4xl font-extrabold font-display text-[var(--text-primary)] block group-hover:scale-105 origin-left transition-transform duration-400">
               {totalClients}
@@ -390,14 +390,14 @@ function Dashboard() {
         <div className="glass-card glass-card-hover p-5 md:p-6 flex items-center justify-between group min-w-[85vw] snap-center md:min-w-0 flex-shrink-0">
           <div className="space-y-1.5 md:space-y-2">
             <span className="text-[10px] md:text-xs font-bold text-[var(--text-secondary)] uppercase tracking-[0.15em] block">
-              Total Revenue Billed ðŸ’µ
+              Total Revenue Billed 💵
             </span>
             <span className="text-2xl md:text-3xl lg:text-4xl font-extrabold font-display text-[var(--text-primary)] block flex items-center group-hover:scale-105 origin-left transition-transform duration-400">
               <IndianRupee className="h-5 w-5 md:h-7 md:w-7 stroke-[2.5]" />
               {totalBilled.toLocaleString('en-IN')}
             </span>
             <span className="text-[10px] md:text-xs text-emerald-600 dark:text-emerald-400 font-bold block bg-emerald-50 dark:bg-emerald-900/20 px-2.5 py-1 rounded-lg inline-block border border-emerald-100 dark:border-emerald-800/50">
-              Realized: â‚¹{totalPaid.toLocaleString('en-IN')}
+              Realized: ₹{totalPaid.toLocaleString('en-IN')}
             </span>
           </div>
           <div className="bg-emerald-50 dark:bg-emerald-500/10 p-4 md:p-5 rounded-[1.25rem] text-emerald-600 dark:text-emerald-400">
@@ -409,7 +409,7 @@ function Dashboard() {
         <div className="glass-card glass-card-hover p-5 md:p-6 flex items-center justify-between group min-w-[85vw] snap-center md:min-w-0 flex-shrink-0">
           <div className="space-y-1.5 md:space-y-2">
             <span className="text-[10px] md:text-xs font-bold text-[var(--text-secondary)] uppercase tracking-[0.15em] block">
-              Outstanding Dues âš ï¸
+              Outstanding Dues ⚠️
             </span>
             <span className="text-2xl md:text-3xl lg:text-4xl font-extrabold font-display text-[var(--brand-red)] block flex items-center group-hover:scale-105 origin-left transition-transform duration-400">
               <IndianRupee className="h-5 w-5 md:h-7 md:w-7 stroke-[2.5]" />
@@ -434,7 +434,7 @@ function Dashboard() {
         <div className="glass-card p-5 md:p-6 lg:col-span-1 flex flex-col justify-between group">
           <div>
             <h3 className="text-sm md:text-base font-bold text-[var(--text-primary)] font-display flex items-center gap-2">
-              Collections Status ðŸ“Š
+              Collections Status 📊
             </h3>
             <p className="text-[10px] md:text-xs text-[var(--text-secondary)] mt-1">
               Current ratio of payment realization versus billed.
@@ -477,7 +477,7 @@ function Dashboard() {
           <div className="bg-[var(--brand-beige)] dark:bg-[#111111] p-3 md:p-4 rounded-xl border border-[var(--border-color)] text-[10px] md:text-xs flex justify-between items-center transition-all duration-300">
             <span className="text-[var(--text-secondary)] font-semibold">Outstanding Pending:</span>
             <span className="font-extrabold text-[var(--brand-red)] group-hover:scale-105 transition-transform">
-              â‚¹{totalOutstanding.toLocaleString('en-IN')}
+              ₹{totalOutstanding.toLocaleString('en-IN')}
             </span>
           </div>
         </div>
@@ -487,7 +487,7 @@ function Dashboard() {
           <div className="flex justify-between items-center mb-4 md:mb-6">
             <div>
               <h3 className="text-sm md:text-base font-bold text-[var(--text-primary)] font-display">
-                Pending Ledger Follow-ups â°
+                Pending Ledger Follow-ups ⏰
               </h3>
               <p className="text-[10px] md:text-xs text-[var(--text-secondary)] mt-1">
                 Client statements awaiting final payments.
@@ -506,7 +506,7 @@ function Dashboard() {
               <div className="w-16 h-16 md:w-20 md:h-20 bg-emerald-50 dark:bg-emerald-900/20 rounded-full flex items-center justify-center mb-4 border border-emerald-100 dark:border-emerald-800 shadow-inner">
                 <Sparkles className="h-8 w-8 md:h-10 md:w-10 text-emerald-500" />
               </div>
-              <p className="font-bold text-[var(--text-primary)] text-base md:text-lg">Awesome! All payments cleared! ðŸ†</p>
+              <p className="font-bold text-[var(--text-primary)] text-base md:text-lg">Awesome! All payments cleared! 🏆</p>
               <p className="text-xs md:text-sm mt-1">Your ledger is perfectly balanced.</p>
             </div>
           ) : (
@@ -557,7 +557,7 @@ function Dashboard() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 md:mb-6 gap-3">
           <div>
             <h3 className="text-sm md:text-base font-bold text-[var(--text-primary)] font-display flex items-center gap-2">
-              Recent Activity Logs ðŸ“
+              Recent Activity Logs 📝
             </h3>
             <p className="text-[10px] md:text-xs text-[var(--text-secondary)] mt-1">
               Preview and manage recently generated estimates and tax invoices.
@@ -610,7 +610,7 @@ function Dashboard() {
                       </span>
                     </td>
                     <td className="px-5 py-4 md:py-5 font-black text-[var(--text-primary)] text-right text-sm md:text-base">
-                      â‚¹{inv.totalAmount.toLocaleString('en-IN')}
+                      ₹{inv.totalAmount.toLocaleString('en-IN')}
                     </td>
                     <td className="px-5 py-4 md:py-5 text-center flex justify-center gap-2">
                       <button
@@ -678,14 +678,14 @@ function Dashboard() {
                     <div className="border-t border-[var(--border-color)] pt-4 mt-4">
                       <div className="text-[9px] md:text-[10px] text-[var(--text-secondary)] uppercase font-bold tracking-widest mb-2">Billed To</div>
                       <div className="font-black text-[var(--text-primary)] text-sm md:text-lg">{selectedInvoice.clientName}</div>
-                      {selectedInvoice.clientPhone && <div className="text-[var(--text-secondary)] font-medium text-[11px] md:text-xs mt-1.5 flex items-center gap-1.5">ðŸ“ž {selectedInvoice.clientPhone}</div>}
+                      {selectedInvoice.clientPhone && <div className="text-[var(--text-secondary)] font-medium text-[11px] md:text-xs mt-1.5 flex items-center gap-1.5">📞 {selectedInvoice.clientPhone}</div>}
                       {selectedInvoice.clientAddress && <div className="text-[var(--text-secondary)] italic text-[10px] md:text-[11px] mt-2 bg-[var(--brand-light)] p-2.5 rounded-xl border border-[var(--border-color)]">{selectedInvoice.clientAddress}</div>}
                     </div>
                   </div>
 
                   <div className="flex justify-between items-center px-5 py-4 bg-[var(--brand-accent)]/10 dark:bg-[var(--brand-accent)]/5 rounded-[1.5rem] border border-[var(--brand-accent)]/20">
                     <span className="font-bold text-[var(--text-primary)] font-display text-sm md:text-base">Invoice Sum</span>
-                    <span className="font-black text-[var(--brand-accent-dark)] dark:text-[var(--brand-accent)] text-xl md:text-2xl drop-shadow-sm">â‚¹{selectedInvoice.totalAmount.toLocaleString('en-IN')}</span>
+                    <span className="font-black text-[var(--brand-accent-dark)] dark:text-[var(--brand-accent)] text-xl md:text-2xl drop-shadow-sm">₹{selectedInvoice.totalAmount.toLocaleString('en-IN')}</span>
                   </div>
                 </div>
               </div>

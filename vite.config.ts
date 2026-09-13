@@ -14,8 +14,8 @@ export default defineConfig({
       VitePWA({
         registerType: 'autoUpdate',
         manifest: {
-          name: 'J.J. INTERIORS & MODUTECH',
-          short_name: 'J.J. Interiors',
+          name: 'JAY JASOL INTERIORS & MODUTECH',
+          short_name: 'JAY JASOL INTERIORS',
           description: 'Furniture Makers',
           theme_color: '#ffffff',
           icons: [

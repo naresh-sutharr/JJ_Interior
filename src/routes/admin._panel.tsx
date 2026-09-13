@@ -75,7 +75,7 @@ function AdminPanel() {
       <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center bg-gradient-to-r from-[var(--brand-accent)]/5 to-transparent">
         <div className="flex items-center space-x-2">
           <Link to="/admin/dashboard" className="flex items-center gap-3 py-6 px-6 cursor-pointer">
-            <img src="/mukeshlogo.jpg" alt="J.J. Interiors Logo" className="h-12 w-auto object-contain rounded bg-white shadow-sm" />
+            <img src="/mukeshlogo.jpg" alt="JAY JASOL INTERIORS Logo" className="h-12 w-auto object-contain rounded bg-white shadow-sm" />
             <div className="flex flex-col">
               <span className="font-bold text-sm tracking-widest text-primary display-serif">J.J.</span>
               <span className="font-bold text-sm tracking-widest text-primary display-serif -mt-1">INTERIORS</span>
@@ -149,7 +149,7 @@ function AdminPanel() {
       <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-4 md:hidden shadow-sm">
         <div className="flex items-center space-x-3">
           <img src="/mukeshlogo.jpg" alt="Logo" className="h-9 w-auto object-contain rounded" />
-          <span className="font-bold text-[11px] tracking-widest text-primary display-serif">J.J. INTERIORS & MODUTECH</span>
+          <span className="font-bold text-[11px] tracking-widest text-primary display-serif">JAY JASOL INTERIORS & MODUTECH</span>
         </div>
         <div className="flex items-center space-x-1">
           <button className="min-h-[44px] min-w-[44px] flex items-center justify-center text-slate-500 dark:text-slate-400">

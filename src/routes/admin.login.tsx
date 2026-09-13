@@ -11,11 +11,11 @@ export const Route = createFileRoute("/admin/login")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Admin Login — J.J. INTERIORS & MODUTECH" },
-      { name: "description", content: "Secure business management login for the J.J. INTERIORS & MODUTECH studio team." },
+      { title: "Admin Login — JAY JASOL INTERIORS & MODUTECH" },
+      { name: "description", content: "Secure business management login for the JAY JASOL INTERIORS & MODUTECH studio team." },
       { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Admin Login — J.J. INTERIORS & MODUTECH" },
-      { property: "og:description", content: "Secure business management login for J.J. INTERIORS & MODUTECH." },
+      { property: "og:title", content: "Admin Login — JAY JASOL INTERIORS & MODUTECH" },
+      { property: "og:description", content: "Secure business management login for JAY JASOL INTERIORS & MODUTECH." },
     ],
   }),
   component: AdminLogin,
@@ -104,7 +104,7 @@ function AdminLogin() {
   return (
     <main className="grid min-h-screen md:grid-cols-2">
       <section className="relative hidden bg-hero text-hero-foreground md:flex md:flex-col md:justify-between md:p-14">
-        <p className="display-serif text-3xl">J.J. INTERIORS & MODUTECH</p>
+        <p className="display-serif text-3xl">JAY JASOL INTERIORS & MODUTECH</p>
         <div>
           <h1 className="display-serif text-6xl leading-[.95]">Business<br />Management</h1>
           <p className="mt-6 max-w-sm text-sm font-light leading-7 text-hero-foreground/70">
@@ -119,7 +119,7 @@ function AdminLogin() {
       <section className="flex items-center justify-center px-6 py-20">
         <form onSubmit={submit} className="w-full max-w-sm space-y-6">
           <div className="mb-8">
-            <p className="text-[10px] uppercase tracking-[.25em] text-muted-foreground">J.J. INTERIORS & MODUTECH</p>
+            <p className="text-[10px] uppercase tracking-[.25em] text-muted-foreground">JAY JASOL INTERIORS & MODUTECH</p>
             <h2 className="mt-3 display-serif text-4xl">Admin Portal</h2>
             <p className="mt-2 text-sm text-muted-foreground">Authorized Access Only</p>
           </div>

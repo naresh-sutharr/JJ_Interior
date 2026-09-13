@@ -9,10 +9,29 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as PublicRouteImport } from './routes/_public'
+import { Route as PublicIndexRouteImport } from './routes/_public.index'
+import { Route as PublicAboutRouteImport } from './routes/_public.about'
+import { Route as PublicBedroomInteriorsRouteImport } from './routes/_public.bedroom-interiors'
+import { Route as PublicCommercialInteriorDesignerSuratRouteImport } from './routes/_public.commercial-interior-designer-surat'
+import { Route as PublicCommercialInteriorsRouteImport } from './routes/_public.commercial-interiors'
+import { Route as PublicContactRouteImport } from './routes/_public.contact'
+import { Route as PublicHomeInteriorDesignerSuratRouteImport } from './routes/_public.home-interior-designer-surat'
+import { Route as PublicInteriorDesignRouteImport } from './routes/_public.interior-design'
+import { Route as PublicInteriorDesignerSuratRouteImport } from './routes/_public.interior-designer-surat'
+import { Route as PublicLivingRoomInteriorsRouteImport } from './routes/_public.living-room-interiors'
+import { Route as PublicModularInteriorsRouteImport } from './routes/_public.modular-interiors'
+import { Route as PublicModularKitchenRouteImport } from './routes/_public.modular-kitchen'
+import { Route as PublicModularKitchenSuratRouteImport } from './routes/_public.modular-kitchen-surat'
+import { Route as PublicOfficeInteriorsRouteImport } from './routes/_public.office-interiors'
+import { Route as PublicResidentialInteriorsRouteImport } from './routes/_public.residential-interiors'
+import { Route as PublicWardrobeDesignRouteImport } from './routes/_public.wardrobe-design'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminPanelRouteImport } from './routes/admin._panel'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as PublicBlogIndexRouteImport } from './routes/_public.blog.index'
+import { Route as PublicProjectsIndexRouteImport } from './routes/_public.projects.index'
+import { Route as PublicServicesIndexRouteImport } from './routes/_public.services.index'
 import { Route as AdminPanelBillingRouteImport } from './routes/admin._panel.billing'
 import { Route as AdminPanelCatalogRouteImport } from './routes/admin._panel.catalog'
 import { Route as AdminPanelClientsRouteImport } from './routes/admin._panel.clients'
@@ -33,10 +52,96 @@ import { Route as AdminPanelProjectsNewRouteImport } from './routes/admin._panel
 import { Route as AdminPanelQuotationsQuotationIdRouteImport } from './routes/admin._panel.quotations.$quotationId'
 import { Route as AdminPanelQuotationsNewRouteImport } from './routes/admin._panel.quotations.new'
 
-const IndexRoute = IndexRouteImport.update({
+const PublicRoute = PublicRouteImport.update({
+  id: '/_public',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PublicIndexRoute = PublicIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicAboutRoute = PublicAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicBedroomInteriorsRoute = PublicBedroomInteriorsRouteImport.update({
+  id: '/bedroom-interiors',
+  path: '/bedroom-interiors',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicCommercialInteriorDesignerSuratRoute =
+  PublicCommercialInteriorDesignerSuratRouteImport.update({
+    id: '/commercial-interior-designer-surat',
+    path: '/commercial-interior-designer-surat',
+    getParentRoute: () => PublicRoute,
+  } as any)
+const PublicCommercialInteriorsRoute =
+  PublicCommercialInteriorsRouteImport.update({
+    id: '/commercial-interiors',
+    path: '/commercial-interiors',
+    getParentRoute: () => PublicRoute,
+  } as any)
+const PublicContactRoute = PublicContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicHomeInteriorDesignerSuratRoute =
+  PublicHomeInteriorDesignerSuratRouteImport.update({
+    id: '/home-interior-designer-surat',
+    path: '/home-interior-designer-surat',
+    getParentRoute: () => PublicRoute,
+  } as any)
+const PublicInteriorDesignRoute = PublicInteriorDesignRouteImport.update({
+  id: '/interior-design',
+  path: '/interior-design',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicInteriorDesignerSuratRoute =
+  PublicInteriorDesignerSuratRouteImport.update({
+    id: '/interior-designer-surat',
+    path: '/interior-designer-surat',
+    getParentRoute: () => PublicRoute,
+  } as any)
+const PublicLivingRoomInteriorsRoute =
+  PublicLivingRoomInteriorsRouteImport.update({
+    id: '/living-room-interiors',
+    path: '/living-room-interiors',
+    getParentRoute: () => PublicRoute,
+  } as any)
+const PublicModularInteriorsRoute = PublicModularInteriorsRouteImport.update({
+  id: '/modular-interiors',
+  path: '/modular-interiors',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicModularKitchenRoute = PublicModularKitchenRouteImport.update({
+  id: '/modular-kitchen',
+  path: '/modular-kitchen',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicModularKitchenSuratRoute =
+  PublicModularKitchenSuratRouteImport.update({
+    id: '/modular-kitchen-surat',
+    path: '/modular-kitchen-surat',
+    getParentRoute: () => PublicRoute,
+  } as any)
+const PublicOfficeInteriorsRoute = PublicOfficeInteriorsRouteImport.update({
+  id: '/office-interiors',
+  path: '/office-interiors',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicResidentialInteriorsRoute =
+  PublicResidentialInteriorsRouteImport.update({
+    id: '/residential-interiors',
+    path: '/residential-interiors',
+    getParentRoute: () => PublicRoute,
+  } as any)
+const PublicWardrobeDesignRoute = PublicWardrobeDesignRouteImport.update({
+  id: '/wardrobe-design',
+  path: '/wardrobe-design',
+  getParentRoute: () => PublicRoute,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/admin/',
@@ -52,6 +157,21 @@ const AdminLoginRoute = AdminLoginRouteImport.update({
   id: '/admin/login',
   path: '/admin/login',
   getParentRoute: () => rootRouteImport,
+} as any)
+const PublicBlogIndexRoute = PublicBlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicProjectsIndexRoute = PublicProjectsIndexRouteImport.update({
+  id: '/projects/',
+  path: '/projects/',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicServicesIndexRoute = PublicServicesIndexRouteImport.update({
+  id: '/services/',
+  path: '/services/',
+  getParentRoute: () => PublicRoute,
 } as any)
 const AdminPanelBillingRoute = AdminPanelBillingRouteImport.update({
   id: '/billing',
@@ -154,7 +274,22 @@ const AdminPanelQuotationsNewRoute = AdminPanelQuotationsNewRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof PublicIndexRoute
+  '/about': typeof PublicAboutRoute
+  '/bedroom-interiors': typeof PublicBedroomInteriorsRoute
+  '/commercial-interior-designer-surat': typeof PublicCommercialInteriorDesignerSuratRoute
+  '/commercial-interiors': typeof PublicCommercialInteriorsRoute
+  '/contact': typeof PublicContactRoute
+  '/home-interior-designer-surat': typeof PublicHomeInteriorDesignerSuratRoute
+  '/interior-design': typeof PublicInteriorDesignRoute
+  '/interior-designer-surat': typeof PublicInteriorDesignerSuratRoute
+  '/living-room-interiors': typeof PublicLivingRoomInteriorsRoute
+  '/modular-interiors': typeof PublicModularInteriorsRoute
+  '/modular-kitchen': typeof PublicModularKitchenRoute
+  '/modular-kitchen-surat': typeof PublicModularKitchenSuratRoute
+  '/office-interiors': typeof PublicOfficeInteriorsRoute
+  '/residential-interiors': typeof PublicResidentialInteriorsRoute
+  '/wardrobe-design': typeof PublicWardrobeDesignRoute
   '/admin': typeof AdminPanelRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
   '/admin/': typeof AdminIndexRoute
@@ -169,6 +304,9 @@ export interface FileRoutesByFullPath {
   '/admin/projects': typeof AdminPanelProjectsRouteWithChildren
   '/admin/quotations': typeof AdminPanelQuotationsRouteWithChildren
   '/admin/settings': typeof AdminPanelSettingsRoute
+  '/blog/': typeof PublicBlogIndexRoute
+  '/projects/': typeof PublicProjectsIndexRoute
+  '/services/': typeof PublicServicesIndexRoute
   '/admin/clients/$clientId': typeof AdminPanelClientsClientIdRoute
   '/admin/clients/new': typeof AdminPanelClientsNewRoute
   '/admin/invoices/$invoiceId': typeof AdminPanelInvoicesInvoiceIdRoute
@@ -179,9 +317,24 @@ export interface FileRoutesByFullPath {
   '/admin/quotations/new': typeof AdminPanelQuotationsNewRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/about': typeof PublicAboutRoute
+  '/bedroom-interiors': typeof PublicBedroomInteriorsRoute
+  '/commercial-interior-designer-surat': typeof PublicCommercialInteriorDesignerSuratRoute
+  '/commercial-interiors': typeof PublicCommercialInteriorsRoute
+  '/contact': typeof PublicContactRoute
+  '/home-interior-designer-surat': typeof PublicHomeInteriorDesignerSuratRoute
+  '/interior-design': typeof PublicInteriorDesignRoute
+  '/interior-designer-surat': typeof PublicInteriorDesignerSuratRoute
+  '/living-room-interiors': typeof PublicLivingRoomInteriorsRoute
+  '/modular-interiors': typeof PublicModularInteriorsRoute
+  '/modular-kitchen': typeof PublicModularKitchenRoute
+  '/modular-kitchen-surat': typeof PublicModularKitchenSuratRoute
+  '/office-interiors': typeof PublicOfficeInteriorsRoute
+  '/residential-interiors': typeof PublicResidentialInteriorsRoute
+  '/wardrobe-design': typeof PublicWardrobeDesignRoute
   '/admin': typeof AdminIndexRoute
   '/admin/login': typeof AdminLoginRoute
+  '/': typeof PublicIndexRoute
   '/admin/billing': typeof AdminPanelBillingRoute
   '/admin/catalog': typeof AdminPanelCatalogRoute
   '/admin/clients': typeof AdminPanelClientsRouteWithChildren
@@ -193,6 +346,9 @@ export interface FileRoutesByTo {
   '/admin/projects': typeof AdminPanelProjectsRouteWithChildren
   '/admin/quotations': typeof AdminPanelQuotationsRouteWithChildren
   '/admin/settings': typeof AdminPanelSettingsRoute
+  '/blog': typeof PublicBlogIndexRoute
+  '/projects': typeof PublicProjectsIndexRoute
+  '/services': typeof PublicServicesIndexRoute
   '/admin/clients/$clientId': typeof AdminPanelClientsClientIdRoute
   '/admin/clients/new': typeof AdminPanelClientsNewRoute
   '/admin/invoices/$invoiceId': typeof AdminPanelInvoicesInvoiceIdRoute
@@ -204,9 +360,25 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/_public': typeof PublicRouteWithChildren
+  '/_public/about': typeof PublicAboutRoute
+  '/_public/bedroom-interiors': typeof PublicBedroomInteriorsRoute
+  '/_public/commercial-interior-designer-surat': typeof PublicCommercialInteriorDesignerSuratRoute
+  '/_public/commercial-interiors': typeof PublicCommercialInteriorsRoute
+  '/_public/contact': typeof PublicContactRoute
+  '/_public/home-interior-designer-surat': typeof PublicHomeInteriorDesignerSuratRoute
+  '/_public/interior-design': typeof PublicInteriorDesignRoute
+  '/_public/interior-designer-surat': typeof PublicInteriorDesignerSuratRoute
+  '/_public/living-room-interiors': typeof PublicLivingRoomInteriorsRoute
+  '/_public/modular-interiors': typeof PublicModularInteriorsRoute
+  '/_public/modular-kitchen': typeof PublicModularKitchenRoute
+  '/_public/modular-kitchen-surat': typeof PublicModularKitchenSuratRoute
+  '/_public/office-interiors': typeof PublicOfficeInteriorsRoute
+  '/_public/residential-interiors': typeof PublicResidentialInteriorsRoute
+  '/_public/wardrobe-design': typeof PublicWardrobeDesignRoute
   '/admin/_panel': typeof AdminPanelRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
+  '/_public/': typeof PublicIndexRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/_panel/billing': typeof AdminPanelBillingRoute
   '/admin/_panel/catalog': typeof AdminPanelCatalogRoute
@@ -219,6 +391,9 @@ export interface FileRoutesById {
   '/admin/_panel/projects': typeof AdminPanelProjectsRouteWithChildren
   '/admin/_panel/quotations': typeof AdminPanelQuotationsRouteWithChildren
   '/admin/_panel/settings': typeof AdminPanelSettingsRoute
+  '/_public/blog/': typeof PublicBlogIndexRoute
+  '/_public/projects/': typeof PublicProjectsIndexRoute
+  '/_public/services/': typeof PublicServicesIndexRoute
   '/admin/_panel/clients/$clientId': typeof AdminPanelClientsClientIdRoute
   '/admin/_panel/clients/new': typeof AdminPanelClientsNewRoute
   '/admin/_panel/invoices/$invoiceId': typeof AdminPanelInvoicesInvoiceIdRoute
@@ -232,6 +407,21 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
+    | '/bedroom-interiors'
+    | '/commercial-interior-designer-surat'
+    | '/commercial-interiors'
+    | '/contact'
+    | '/home-interior-designer-surat'
+    | '/interior-design'
+    | '/interior-designer-surat'
+    | '/living-room-interiors'
+    | '/modular-interiors'
+    | '/modular-kitchen'
+    | '/modular-kitchen-surat'
+    | '/office-interiors'
+    | '/residential-interiors'
+    | '/wardrobe-design'
     | '/admin'
     | '/admin/login'
     | '/admin/'
@@ -246,6 +436,9 @@ export interface FileRouteTypes {
     | '/admin/projects'
     | '/admin/quotations'
     | '/admin/settings'
+    | '/blog/'
+    | '/projects/'
+    | '/services/'
     | '/admin/clients/$clientId'
     | '/admin/clients/new'
     | '/admin/invoices/$invoiceId'
@@ -256,9 +449,24 @@ export interface FileRouteTypes {
     | '/admin/quotations/new'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
+    | '/about'
+    | '/bedroom-interiors'
+    | '/commercial-interior-designer-surat'
+    | '/commercial-interiors'
+    | '/contact'
+    | '/home-interior-designer-surat'
+    | '/interior-design'
+    | '/interior-designer-surat'
+    | '/living-room-interiors'
+    | '/modular-interiors'
+    | '/modular-kitchen'
+    | '/modular-kitchen-surat'
+    | '/office-interiors'
+    | '/residential-interiors'
+    | '/wardrobe-design'
     | '/admin'
     | '/admin/login'
+    | '/'
     | '/admin/billing'
     | '/admin/catalog'
     | '/admin/clients'
@@ -270,6 +478,9 @@ export interface FileRouteTypes {
     | '/admin/projects'
     | '/admin/quotations'
     | '/admin/settings'
+    | '/blog'
+    | '/projects'
+    | '/services'
     | '/admin/clients/$clientId'
     | '/admin/clients/new'
     | '/admin/invoices/$invoiceId'
@@ -280,9 +491,25 @@ export interface FileRouteTypes {
     | '/admin/quotations/new'
   id:
     | '__root__'
-    | '/'
+    | '/_public'
+    | '/_public/about'
+    | '/_public/bedroom-interiors'
+    | '/_public/commercial-interior-designer-surat'
+    | '/_public/commercial-interiors'
+    | '/_public/contact'
+    | '/_public/home-interior-designer-surat'
+    | '/_public/interior-design'
+    | '/_public/interior-designer-surat'
+    | '/_public/living-room-interiors'
+    | '/_public/modular-interiors'
+    | '/_public/modular-kitchen'
+    | '/_public/modular-kitchen-surat'
+    | '/_public/office-interiors'
+    | '/_public/residential-interiors'
+    | '/_public/wardrobe-design'
     | '/admin/_panel'
     | '/admin/login'
+    | '/_public/'
     | '/admin/'
     | '/admin/_panel/billing'
     | '/admin/_panel/catalog'
@@ -295,6 +522,9 @@ export interface FileRouteTypes {
     | '/admin/_panel/projects'
     | '/admin/_panel/quotations'
     | '/admin/_panel/settings'
+    | '/_public/blog/'
+    | '/_public/projects/'
+    | '/_public/services/'
     | '/admin/_panel/clients/$clientId'
     | '/admin/_panel/clients/new'
     | '/admin/_panel/invoices/$invoiceId'
@@ -306,7 +536,7 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  PublicRoute: typeof PublicRouteWithChildren
   AdminPanelRoute: typeof AdminPanelRouteWithChildren
   AdminLoginRoute: typeof AdminLoginRoute
   AdminIndexRoute: typeof AdminIndexRoute
@@ -314,12 +544,124 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/_public': {
+      id: '/_public'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof PublicRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_public/': {
+      id: '/_public/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof PublicIndexRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/about': {
+      id: '/_public/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof PublicAboutRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/bedroom-interiors': {
+      id: '/_public/bedroom-interiors'
+      path: '/bedroom-interiors'
+      fullPath: '/bedroom-interiors'
+      preLoaderRoute: typeof PublicBedroomInteriorsRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/commercial-interior-designer-surat': {
+      id: '/_public/commercial-interior-designer-surat'
+      path: '/commercial-interior-designer-surat'
+      fullPath: '/commercial-interior-designer-surat'
+      preLoaderRoute: typeof PublicCommercialInteriorDesignerSuratRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/commercial-interiors': {
+      id: '/_public/commercial-interiors'
+      path: '/commercial-interiors'
+      fullPath: '/commercial-interiors'
+      preLoaderRoute: typeof PublicCommercialInteriorsRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/contact': {
+      id: '/_public/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof PublicContactRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/home-interior-designer-surat': {
+      id: '/_public/home-interior-designer-surat'
+      path: '/home-interior-designer-surat'
+      fullPath: '/home-interior-designer-surat'
+      preLoaderRoute: typeof PublicHomeInteriorDesignerSuratRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/interior-design': {
+      id: '/_public/interior-design'
+      path: '/interior-design'
+      fullPath: '/interior-design'
+      preLoaderRoute: typeof PublicInteriorDesignRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/interior-designer-surat': {
+      id: '/_public/interior-designer-surat'
+      path: '/interior-designer-surat'
+      fullPath: '/interior-designer-surat'
+      preLoaderRoute: typeof PublicInteriorDesignerSuratRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/living-room-interiors': {
+      id: '/_public/living-room-interiors'
+      path: '/living-room-interiors'
+      fullPath: '/living-room-interiors'
+      preLoaderRoute: typeof PublicLivingRoomInteriorsRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/modular-interiors': {
+      id: '/_public/modular-interiors'
+      path: '/modular-interiors'
+      fullPath: '/modular-interiors'
+      preLoaderRoute: typeof PublicModularInteriorsRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/modular-kitchen': {
+      id: '/_public/modular-kitchen'
+      path: '/modular-kitchen'
+      fullPath: '/modular-kitchen'
+      preLoaderRoute: typeof PublicModularKitchenRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/modular-kitchen-surat': {
+      id: '/_public/modular-kitchen-surat'
+      path: '/modular-kitchen-surat'
+      fullPath: '/modular-kitchen-surat'
+      preLoaderRoute: typeof PublicModularKitchenSuratRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/office-interiors': {
+      id: '/_public/office-interiors'
+      path: '/office-interiors'
+      fullPath: '/office-interiors'
+      preLoaderRoute: typeof PublicOfficeInteriorsRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/residential-interiors': {
+      id: '/_public/residential-interiors'
+      path: '/residential-interiors'
+      fullPath: '/residential-interiors'
+      preLoaderRoute: typeof PublicResidentialInteriorsRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/wardrobe-design': {
+      id: '/_public/wardrobe-design'
+      path: '/wardrobe-design'
+      fullPath: '/wardrobe-design'
+      preLoaderRoute: typeof PublicWardrobeDesignRouteImport
+      parentRoute: typeof PublicRoute
     }
     '/admin/': {
       id: '/admin/'
@@ -341,6 +683,27 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/login'
       preLoaderRoute: typeof AdminLoginRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_public/blog/': {
+      id: '/_public/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof PublicBlogIndexRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/projects/': {
+      id: '/_public/projects/'
+      path: '/projects'
+      fullPath: '/projects/'
+      preLoaderRoute: typeof PublicProjectsIndexRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/services/': {
+      id: '/_public/services/'
+      path: '/services'
+      fullPath: '/services/'
+      preLoaderRoute: typeof PublicServicesIndexRouteImport
+      parentRoute: typeof PublicRoute
     }
     '/admin/_panel/billing': {
       id: '/admin/_panel/billing'
@@ -478,6 +841,54 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface PublicRouteChildren {
+  PublicAboutRoute: typeof PublicAboutRoute
+  PublicBedroomInteriorsRoute: typeof PublicBedroomInteriorsRoute
+  PublicCommercialInteriorDesignerSuratRoute: typeof PublicCommercialInteriorDesignerSuratRoute
+  PublicCommercialInteriorsRoute: typeof PublicCommercialInteriorsRoute
+  PublicContactRoute: typeof PublicContactRoute
+  PublicHomeInteriorDesignerSuratRoute: typeof PublicHomeInteriorDesignerSuratRoute
+  PublicInteriorDesignRoute: typeof PublicInteriorDesignRoute
+  PublicInteriorDesignerSuratRoute: typeof PublicInteriorDesignerSuratRoute
+  PublicLivingRoomInteriorsRoute: typeof PublicLivingRoomInteriorsRoute
+  PublicModularInteriorsRoute: typeof PublicModularInteriorsRoute
+  PublicModularKitchenRoute: typeof PublicModularKitchenRoute
+  PublicModularKitchenSuratRoute: typeof PublicModularKitchenSuratRoute
+  PublicOfficeInteriorsRoute: typeof PublicOfficeInteriorsRoute
+  PublicResidentialInteriorsRoute: typeof PublicResidentialInteriorsRoute
+  PublicWardrobeDesignRoute: typeof PublicWardrobeDesignRoute
+  PublicIndexRoute: typeof PublicIndexRoute
+  PublicBlogIndexRoute: typeof PublicBlogIndexRoute
+  PublicProjectsIndexRoute: typeof PublicProjectsIndexRoute
+  PublicServicesIndexRoute: typeof PublicServicesIndexRoute
+}
+
+const PublicRouteChildren: PublicRouteChildren = {
+  PublicAboutRoute: PublicAboutRoute,
+  PublicBedroomInteriorsRoute: PublicBedroomInteriorsRoute,
+  PublicCommercialInteriorDesignerSuratRoute:
+    PublicCommercialInteriorDesignerSuratRoute,
+  PublicCommercialInteriorsRoute: PublicCommercialInteriorsRoute,
+  PublicContactRoute: PublicContactRoute,
+  PublicHomeInteriorDesignerSuratRoute: PublicHomeInteriorDesignerSuratRoute,
+  PublicInteriorDesignRoute: PublicInteriorDesignRoute,
+  PublicInteriorDesignerSuratRoute: PublicInteriorDesignerSuratRoute,
+  PublicLivingRoomInteriorsRoute: PublicLivingRoomInteriorsRoute,
+  PublicModularInteriorsRoute: PublicModularInteriorsRoute,
+  PublicModularKitchenRoute: PublicModularKitchenRoute,
+  PublicModularKitchenSuratRoute: PublicModularKitchenSuratRoute,
+  PublicOfficeInteriorsRoute: PublicOfficeInteriorsRoute,
+  PublicResidentialInteriorsRoute: PublicResidentialInteriorsRoute,
+  PublicWardrobeDesignRoute: PublicWardrobeDesignRoute,
+  PublicIndexRoute: PublicIndexRoute,
+  PublicBlogIndexRoute: PublicBlogIndexRoute,
+  PublicProjectsIndexRoute: PublicProjectsIndexRoute,
+  PublicServicesIndexRoute: PublicServicesIndexRoute,
+}
+
+const PublicRouteWithChildren =
+  PublicRoute._addFileChildren(PublicRouteChildren)
+
 interface AdminPanelClientsRouteChildren {
   AdminPanelClientsClientIdRoute: typeof AdminPanelClientsClientIdRoute
   AdminPanelClientsNewRoute: typeof AdminPanelClientsNewRoute
@@ -563,7 +974,7 @@ const AdminPanelRouteWithChildren = AdminPanelRoute._addFileChildren(
 )
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  PublicRoute: PublicRouteWithChildren,
   AdminPanelRoute: AdminPanelRouteWithChildren,
   AdminLoginRoute: AdminLoginRoute,
   AdminIndexRoute: AdminIndexRoute,

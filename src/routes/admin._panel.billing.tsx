@@ -129,7 +129,7 @@ function Billing() {
   const operatorSettings = operatorData || {
     name: 'Mukesh bhai Suthar',
     role: 'Authorized Operator',
-    businessName: 'J.J. INTERIORS & MODUTECH',
+    businessName: 'JAY JASOL INTERIORS & MODUTECH',
     address: 'Surat, Gujarat',
     phone: '9898412998',
     panCard: 'CMYPS4786H',
@@ -582,7 +582,7 @@ function Billing() {
                     <div className="w-full flex items-center justify-between pt-1.5 px-1">
                       {/* Brand Logo - LARGER */}
                       <div className="flex-shrink-0">
-                        <img src="/mukeshlogo.jpg" alt="J.J. Interiors Logo" className="h-[80px] w-auto object-contain rounded-md bg-white" />
+                        <img src="/mukeshlogo.jpg" alt="JAY JASOL INTERIORS Logo" className="h-[80px] w-auto object-contain rounded-md bg-white" />
                       </div>
                       
                       {/* Main Header text */}
@@ -591,7 +591,7 @@ function Billing() {
                           className="select-none text-[28px] font-semibold text-brand-red leading-tight"
                           style={{ fontFamily: "'Times New Roman', Times, serif" }}
                         >
-                          J.J. INTERIORS & MODUTECH
+                          JAY JASOL INTERIORS & MODUTECH
                         </h1>
                         <div className="text-slate-900 font-display font-black text-[10px] tracking-[0.25em] uppercase mt-0.5 leading-none select-none">
                           FURNITURE MAKERS

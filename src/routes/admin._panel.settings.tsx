@@ -79,7 +79,7 @@ function Settings() {
   const [profileData, setProfileData] = useState({
     name: operatorData?.name || 'Mukesh bhai Suthar',
     role: operatorData?.role || 'Authorized Operator',
-    businessName: operatorData?.businessName || 'J.J. INTERIORS & MODUTECH',
+    businessName: operatorData?.businessName || 'JAY JASOL INTERIORS & MODUTECH',
     address: operatorData?.address || 'Surat, Surat - 390008',
     phone: operatorData?.phone || '94270549218',
     panCard: operatorData?.panCard || 'CMYPS4786H',
