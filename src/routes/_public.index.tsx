@@ -1,9 +1,4 @@
-﻿const fs = require('fs');
-const file = 'src/routes/_public.index.tsx';
-let content = fs.readFileSync(file, 'utf8');
-
-// Replace the entire file with the new premium home page
-content = `import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowDown } from "lucide-react";
 import heroImage from "@/assets/hero-residence.jpg";
 
@@ -76,7 +71,3 @@ function Index() {
     </div>
   );
 }
-`;
-
-fs.writeFileSync(file, content);
-console.log("Updated _public.index.tsx");
