@@ -30,9 +30,8 @@ const schema = z.object({
 function AdminLogin() {
   const navigate = useNavigate();
   const [busy, setBusy] = useState(false);
-
-  const email = "naresh@gmail.com";
-  const password = "admin123";
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
@@ -42,14 +41,21 @@ function AdminLogin() {
 
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
+    
+    // Only allow the specific admin email if they want to enforce it locally, 
+    // but typically Supabase auth handles validation.
+    if (email !== "naresh@gmail.com") {
+       toast.error("Unauthorized admin ID.");
+       return;
+    }
+
     setBusy(true);
     try {
-      // Step 1: Try to sign in
+      // Try to sign in
       let { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
       
-      // Step 2: If the account doesn't exist, create it silently
+      // If the account doesn't exist, create it silently for the admin ONLY
       if (signInError && signInError.message.includes("Invalid login credentials")) {
-        toast.info("First time login detected. Creating admin account...");
         const { error: signUpError } = await supabase.auth.signUp({
           email,
           password,
@@ -65,7 +71,7 @@ function AdminLogin() {
         const { error: retryError } = await supabase.auth.signInWithPassword({ email, password });
         if (retryError) {
            if (retryError.message.toLowerCase().includes("email not confirmed")) {
-              toast.error("Account created! PLEASE CHECK YOUR EMAIL (naresh@gmail.com) and click the confirmation link. Then come back and click Login again.", { duration: 10000 });
+              toast.error("Account created! PLEASE CHECK YOUR EMAIL (naresh@gmail.com) and click the confirmation link.", { duration: 10000 });
               return;
            }
            throw retryError;
@@ -79,7 +85,7 @@ function AdminLogin() {
         throw signInError;
       }
 
-      // Step 3: Verify we are logged in
+      // Verify we are logged in
       const { data } = await supabase.auth.getUser();
       if (!data.user) {
         toast.error("Login failed. Check if email confirmation is required in Supabase settings.");
@@ -111,15 +117,41 @@ function AdminLogin() {
       </section>
 
       <section className="flex items-center justify-center px-6 py-20">
-        <form onSubmit={submit} className="w-full max-w-sm space-y-6 text-center">
-          <div className="mb-12">
+        <form onSubmit={submit} className="w-full max-w-sm space-y-6">
+          <div className="mb-8">
             <p className="text-[10px] uppercase tracking-[.25em] text-muted-foreground">J.J. INTERIORS & MODUTECH</p>
             <h2 className="mt-3 display-serif text-4xl">Admin Portal</h2>
-            <p className="mt-2 text-sm text-muted-foreground">Personal Website - Authorized Access Only</p>
+            <p className="mt-2 text-sm text-muted-foreground">Authorized Access Only</p>
           </div>
 
-          <Button type="submit" disabled={busy} className="w-full rounded-none h-14 mt-8 text-[12px] tracking-widest uppercase font-bold">
-            {busy ? "Authenticating..." : "Secure Login"}
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="email">Admin ID (Email)</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="Enter your admin email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                type="password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+
+          <Button type="submit" disabled={busy} className="w-full rounded-none h-12 mt-6 text-[12px] tracking-widest uppercase font-bold">
+            {busy ? "Authenticating..." : "Sign In"}
           </Button>
           
         </form>
