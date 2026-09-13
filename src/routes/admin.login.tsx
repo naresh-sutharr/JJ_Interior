@@ -29,11 +29,10 @@ const schema = z.object({
 
 function AdminLogin() {
   const navigate = useNavigate();
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [fullName, setFullName] = useState("");
   const [busy, setBusy] = useState(false);
+
+  const email = "naresh@gmail.com";
+  const password = "admin123";
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
@@ -43,31 +42,41 @@ function AdminLogin() {
 
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const parsed = schema.safeParse({ email, password, fullName });
-    if (!parsed.success) {
-      toast.error(parsed.error.issues[0]?.message ?? "Invalid details");
-      return;
-    }
     setBusy(true);
     try {
-      if (mode === "signin") {
-        const { error } = await supabase.auth.signInWithPassword({ email: parsed.data.email, password });
-        if (error) throw error;
-      } else {
-        const { error } = await supabase.auth.signUp({
-          email: parsed.data.email,
+      // Step 1: Try to sign in
+      let { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+      
+      // Step 2: If the account doesn't exist, create it silently
+      if (signInError && signInError.message.includes("Invalid login credentials")) {
+        toast.info("First time login detected. Creating admin account...");
+        const { error: signUpError } = await supabase.auth.signUp({
+          email,
           password,
-          options: { emailRedirectTo: window.location.origin, data: { full_name: fullName } },
+          options: { data: { full_name: "Naresh Suthar" } },
         });
-        if (error) throw error;
+        
+        if (signUpError) throw signUpError;
+        
+        // Wait a moment for Supabase to process the signup
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // Try signing in again
+        const { error: retryError } = await supabase.auth.signInWithPassword({ email, password });
+        if (retryError) throw retryError;
+        signInError = null;
+      } else if (signInError) {
+        throw signInError;
       }
+
+      // Step 3: Verify we are logged in
       const { data } = await supabase.auth.getUser();
       if (!data.user) {
-        toast.success("Account created. Please sign in.");
-        setMode("signin");
+        toast.error("Login failed. Check if email confirmation is required in Supabase settings.");
         return;
       }
-      toast.success("Welcome back");
+      
+      toast.success("Welcome back, Admin!");
       navigate({ to: "/admin/dashboard", replace: true });
     } catch (error) {
       toast.error((error as Error).message);
@@ -93,71 +102,40 @@ function AdminLogin() {
 
       <section className="flex items-center justify-center px-6 py-20">
         <form onSubmit={submit} className="w-full max-w-sm space-y-6">
-          <div>
+          <div className="text-center mb-8">
             <p className="text-[10px] uppercase tracking-[.25em] text-muted-foreground">J.J. INTERIORS & MODUTECH</p>
-            <h2 className="mt-3 display-serif text-4xl">{mode === "signin" ? "Admin Sign In" : "Create Admin"}</h2>
+            <h2 className="mt-3 display-serif text-4xl">Admin Login</h2>
+            <p className="mt-2 text-sm text-muted-foreground">Personal Website - Authorized Access Only</p>
           </div>
 
-          {mode === "signup" && (
+          <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="fullName">Full Name</Label>
+              <Label htmlFor="email">Admin ID</Label>
               <Input
-                id="fullName"
-                type="text"
-                placeholder="Your name"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                required
-                autoComplete="name"
+                id="email"
+                type="email"
+                value={email}
+                readOnly
+                className="bg-muted text-muted-foreground font-mono"
               />
             </div>
-          )}
 
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="admin@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              autoComplete="email"
-            />
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                readOnly
+                className="bg-muted text-muted-foreground font-mono"
+              />
+            </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
-            <Input
-              id="password"
-              type="password"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              autoComplete={mode === "signup" ? "new-password" : "current-password"}
-            />
-          </div>
-
-          <Button type="submit" disabled={busy} className="w-full rounded-none h-11 text-[11px] tracking-widest uppercase">
-            {busy ? "Please wait…" : mode === "signin" ? "Sign In" : "Create Account"}
+          <Button type="submit" disabled={busy} className="w-full rounded-none h-12 mt-6 text-[12px] tracking-widest uppercase font-bold">
+            {busy ? "Authenticating..." : "Secure Login"}
           </Button>
-
-          <p className="text-center text-xs text-muted-foreground">
-            {mode === "signin" ? (
-              <>First time?{" "}
-                <button type="button" onClick={() => setMode("signup")} className="underline hover:text-foreground">
-                  Create admin account
-                </button>
-              </>
-            ) : (
-              <>Already have an account?{" "}
-                <button type="button" onClick={() => setMode("signin")} className="underline hover:text-foreground">
-                  Sign in
-                </button>
-              </>
-            )}
-          </p>
+          
         </form>
       </section>
     </main>
