@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowDown, ArrowRight, Menu, X } from "lucide-react";
+import { ArrowDown, ArrowRight, Menu, X, Instagram, Phone, Mail } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import heroImage from "@/assets/hero-residence.jpg";
@@ -156,9 +156,49 @@ function Index() {
 
       <section className="bg-stone py-28 md:py-44"><div className="section-shell reveal mx-auto max-w-5xl text-center"><p className="mb-12 text-[10px] uppercase tracking-[.25em] text-muted-foreground">Client Perspective</p><blockquote className="display-serif text-[clamp(2.1rem,4.5vw,5rem)] leading-[1.12]">“J.J. INTERIORS & MODUTECH understood that true luxury is not excess. It is the feeling that every detail belongs exactly where it is.”</blockquote><p className="mt-10 text-[10px] uppercase tracking-[.22em]">Private Residence · Surat</p></div></section>
 
-      <section id="contact" className="relative min-h-[85vh] overflow-hidden bg-hero text-hero-foreground"><img src={heroImage} alt="J.J. INTERIORS & MODUTECH luxury residence at dusk" width={1920} height={1088} loading="lazy" className="absolute inset-0 h-full w-full scale-105 object-cover opacity-25" /><div className="section-shell relative flex min-h-[85vh] flex-col justify-center py-28"><div className="reveal"><p className="mb-8 text-[10px] uppercase tracking-[.25em] text-champagne">Begin a Conversation</p><h2 className="display-serif text-[clamp(3.5rem,9vw,8.5rem)] leading-[.88]">LET'S CREATE<br />SOMETHING TIMELESS.</h2><div className="mt-14 flex flex-wrap gap-x-8 gap-y-5"><a href={`mailto:${EMAIL_ADDRESS}`} className="group flex items-center gap-2 border-b border-hero-foreground/50 pb-2 text-xs uppercase tracking-[.18em]">Start a Project <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" /></a><a href={WHATSAPP_LINK} target="_blank" rel="noreferrer" className="border-b border-hero-foreground/50 pb-2 text-xs uppercase tracking-[.18em]">WhatsApp</a><a href={`tel:${WHATSAPP_NUMBER}`} className="border-b border-hero-foreground/50 pb-2 text-xs uppercase tracking-[.18em]">Phone</a><a href={`mailto:${EMAIL_ADDRESS}`} className="border-b border-hero-foreground/50 pb-2 text-xs uppercase tracking-[.18em]">Email</a></div></div></div></section>
+      <section id="contact" className="relative min-h-[85vh] overflow-hidden bg-hero text-hero-foreground">
+        <img src={heroImage} alt="J.J. INTERIORS & MODUTECH luxury residence at dusk" width={1920} height={1088} loading="lazy" className="absolute inset-0 h-full w-full scale-105 object-cover opacity-25" />
+        <div className="section-shell relative flex min-h-[85vh] flex-col justify-center py-28">
+          <div className="reveal grid md:grid-cols-12 gap-12 items-center">
+            <div className="md:col-span-8">
+              <p className="mb-8 text-[10px] uppercase tracking-[.25em] text-champagne">Begin a Conversation</p>
+              <h2 className="display-serif text-[clamp(3.5rem,9vw,8.5rem)] leading-[.88]">LET'S CREATE<br />SOMETHING TIMELESS.</h2>
+              <p className="mt-8 max-w-xl text-sm font-light leading-7 text-hero-foreground/80">With over 25+ years of excellence in crafting bespoke interiors, we bring your vision to life with uncompromising quality and attention to detail.</p>
+              <div className="mt-10 flex flex-wrap gap-x-8 gap-y-5">
+                <a href={`mailto:${EMAIL_ADDRESS}`} className="group flex items-center gap-2 border-b border-hero-foreground/50 pb-2 text-xs uppercase tracking-[.18em]">Start a Project <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" /></a>
+                <a href={WHATSAPP_LINK} target="_blank" rel="noreferrer" className="border-b border-hero-foreground/50 pb-2 text-xs uppercase tracking-[.18em]">WhatsApp</a>
+              </div>
+            </div>
+            <div className="md:col-span-4 mt-8 md:mt-0">
+              <img src={mukeshPhoto} alt="Mukesh bhai Suthar" className="w-full max-w-[280px] mx-auto md:max-w-none aspect-[3/4] object-cover rounded-xl shadow-2xl border border-white/10" />
+            </div>
+          </div>
+        </div>
+      </section>
 
-      <footer className="bg-hero px-4 pb-10 text-hero-foreground"><div className="section-shell border-t border-hero-foreground/20 pt-12"><div className="grid gap-12 md:grid-cols-4"><div><p className="display-serif text-3xl">J.J. INTERIORS & MODUTECH</p><p className="mt-3 text-[10px] uppercase tracking-[.2em] text-hero-foreground/45">Interior Architecture Studio</p></div><div className="space-y-3 text-xs">{navItems.map((item) => <button key={item} onClick={() => scrollTo(item)} className="block cursor-pointer hover:opacity-55">{item}</button>)}</div><div className="space-y-3 text-xs"><a className="block hover:opacity-55" href={`https://instagram.com/${INSTAGRAM_HANDLE}`} target="_blank" rel="noreferrer">Instagram</a><a className="block hover:opacity-55" href={WHATSAPP_LINK} target="_blank" rel="noreferrer">WhatsApp</a><a className="block hover:opacity-55" href={`mailto:${EMAIL_ADDRESS}`}>Email Studio</a></div><div className="text-xs leading-6 text-hero-foreground/65">Surat, Gujarat<br />Projects Worldwide<br /><br /><a href="/admin/login" className="hover:text-champagne transition-colors">Admin Portal →</a></div></div><div className="mt-16 flex flex-col gap-3 border-t border-hero-foreground/20 pt-6 text-[9px] uppercase tracking-[.18em] text-hero-foreground/40 sm:flex-row sm:justify-between"><p>© {new Date().getFullYear()} J.J. INTERIORS & MODUTECH</p><p>Spaces with enduring soul</p></div></div></footer>
+      <footer className="bg-hero px-4 pb-10 text-hero-foreground">
+        <div className="section-shell border-t border-hero-foreground/20 pt-12">
+          <div className="grid gap-12 md:grid-cols-4">
+            <div>
+              <p className="display-serif text-3xl">J.J. INTERIORS & MODUTECH</p>
+              <p className="mt-3 text-[10px] uppercase tracking-[.2em] text-hero-foreground/45">Interior Architecture Studio</p>
+            </div>
+            <div className="space-y-3 text-xs">
+              {navItems.map((item) => <button key={item} onClick={() => scrollTo(item)} className="block cursor-pointer hover:opacity-55">{item}</button>)}
+            </div>
+            <div className="space-y-3 text-xs">
+              <a className="hover:opacity-55 flex gap-2 items-center w-fit" href={`https://instagram.com/${INSTAGRAM_HANDLE}`} target="_blank" rel="noreferrer"><Instagram className="h-4 w-4" /> Instagram: @{INSTAGRAM_HANDLE}</a>
+              <a className="hover:opacity-55 flex gap-2 items-center w-fit" href={WHATSAPP_LINK} target="_blank" rel="noreferrer"><Phone className="h-4 w-4" /> WhatsApp: {PHONE_NUMBER}</a>
+              <a className="hover:opacity-55 flex gap-2 items-center w-fit" href={`mailto:${EMAIL_ADDRESS}`}><Mail className="h-4 w-4" /> Email: {EMAIL_ADDRESS}</a>
+            </div>
+            <div className="text-xs leading-6 text-hero-foreground/65">Surat, Gujarat<br />Projects Worldwide<br /><br /><a href="/admin/login" className="hover:text-champagne transition-colors font-semibold">Admin Portal →</a></div>
+          </div>
+          <div className="mt-16 flex flex-col gap-3 border-t border-hero-foreground/20 pt-6 text-[9px] uppercase tracking-[.18em] text-hero-foreground/40 sm:flex-row sm:justify-between">
+            <p>© {new Date().getFullYear()} J.J. INTERIORS & MODUTECH</p>
+            <p>Spaces with enduring soul</p>
+          </div>
+        </div>
+      </footer>
 
       {/* Floating WhatsApp Button */}
       <a 
