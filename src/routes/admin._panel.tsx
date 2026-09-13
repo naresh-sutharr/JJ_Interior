@@ -149,10 +149,7 @@ function AdminPanel() {
       <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-4 md:hidden shadow-sm">
         <div className="flex items-center space-x-3">
           <img src="/mukeshlogo.jpg" alt="Logo" className="h-9 w-auto object-contain rounded" />
-          <div className="flex flex-col">
-            <span className="font-bold text-sm tracking-widest text-primary display-serif">J.J. INTERIORS</span>
-            <span className="text-[8px] uppercase tracking-widest font-semibold mt-0.5 text-muted-foreground">& MODUTECH</span>
-          </div>
+          <span className="font-bold text-[11px] tracking-widest text-primary display-serif">J.J. INTERIORS & MODUTECH</span>
         </div>
         <div className="flex items-center space-x-1">
           <button className="min-h-[44px] min-w-[44px] flex items-center justify-center text-slate-500 dark:text-slate-400">

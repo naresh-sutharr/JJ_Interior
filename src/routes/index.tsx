@@ -91,22 +91,19 @@ function Index() {
     <main>
       <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled ? "border-b border-border bg-background/95 text-foreground backdrop-blur" : "text-hero-foreground"}`}>
         <div className="section-shell grid h-20 grid-cols-[minmax(0,1fr)_auto] items-center md:h-24 md:grid-cols-[1fr_auto_1fr]">
-          <button onClick={() => scrollTo("home")} className="flex items-center gap-2 md:gap-3 w-fit cursor-pointer text-left display-serif tracking-normal" aria-label="J.J. INTERIORS & MODUTECH home">
-            <img src="/mukeshlogo.jpg" alt="J.J. Interiors Logo" className="h-10 md:h-12 w-auto object-contain rounded bg-white p-0.5" />
-            <div className="flex flex-col">
-              <span className="text-[13px] md:text-xl font-bold leading-tight">J.J. INTERIORS</span>
-              <span className="text-[8px] md:text-xs font-semibold uppercase tracking-widest text-muted-foreground">& MODUTECH</span>
-            </div>
+          <button onClick={() => scrollTo("home")} className="flex items-center gap-1.5 md:gap-3 w-fit cursor-pointer text-left display-serif tracking-normal" aria-label="J.J. INTERIORS & MODUTECH home">
+            <img src="/mukeshlogo.jpg" alt="J.J. Interiors Logo" className="h-9 md:h-12 w-auto object-contain rounded bg-white" />
+            <span className="text-[11px] md:text-xl font-bold leading-tight">J.J. INTERIORS & MODUTECH</span>
           </button>
           <nav className="hidden items-center gap-8 md:flex" aria-label="Main navigation">
             {navItems.map((item) => <button key={item} onClick={() => scrollTo(item)} className="cursor-pointer text-[11px] uppercase tracking-[.2em] transition-opacity hover:opacity-55">{item}</button>)}
           </nav>
-          <div className="flex justify-end gap-3">
-            <Button className="hidden h-10 rounded-full bg-gradient-to-r from-amber-600 to-amber-900 text-white shadow-lg shadow-amber-900/40 border-0 px-6 text-[10px] font-bold uppercase tracking-[.18em] hover:scale-105 transition-all duration-300 md:inline-flex" asChild>
-              <a href="/admin/login">Admin Portal ✨</a>
+          <div className="flex justify-end items-center gap-2 md:gap-3">
+            <Button className="h-8 md:h-10 rounded-full bg-gradient-to-r from-amber-600 to-amber-900 text-white shadow-lg shadow-amber-900/40 border-0 px-3 md:px-6 text-[9px] md:text-[10px] font-bold uppercase tracking-wide md:tracking-[.18em] hover:scale-105 transition-all duration-300 inline-flex" asChild>
+              <a href="/admin/login">Admin ✨</a>
             </Button>
             <Button variant={scrolled ? "outline" : "inverse"} className="hidden h-10 rounded-none px-5 text-[10px] uppercase tracking-[.18em] md:inline-flex" onClick={() => scrollTo("contact")}>Start a Project</Button>
-            <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? "Close menu" : "Open menu"}>{menuOpen ? <X /> : <Menu />}</Button>
+            <Button variant="ghost" size="icon" className="md:hidden h-8 w-8" onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? "Close menu" : "Open menu"}>{menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}</Button>
           </div>
         </div>
         {menuOpen && <nav className="flex min-h-[calc(100vh-5rem)] flex-col justify-center gap-7 bg-background px-8 text-foreground md:hidden">{navItems.map((item) => <button key={item} onClick={() => scrollTo(item)} className="cursor-pointer text-left display-serif text-4xl">{item}</button>)}</nav>}
