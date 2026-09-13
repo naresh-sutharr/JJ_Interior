@@ -2,6 +2,8 @@ import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin/login")({
@@ -11,8 +13,6 @@ export const Route = createFileRoute("/admin/login")({
       { title: "Admin Login — J.J. INTERIORS & MODUTECH" },
       { name: "description", content: "Secure business management login for the J.J. INTERIORS & MODUTECH studio team." },
       { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Admin Login — J.J. INTERIORS & MODUTECH" },
-      { property: "og:description", content: "Secure business management login for J.J. INTERIORS & MODUTECH." },
     ],
   }),
   component: AdminLogin,
@@ -20,9 +20,13 @@ export const Route = createFileRoute("/admin/login")({
 
 function AdminLogin() {
   const navigate = useNavigate();
+  const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [busy, setBusy] = useState(false);
+  
+  // Fixed credentials
   const email = "naresh@gmail.com";
   const password = "admin123";
+  const fullName = "Naresh Suthar";
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
@@ -34,32 +38,26 @@ function AdminLogin() {
     event.preventDefault();
     setBusy(true);
     try {
-      let { error } = await supabase.auth.signInWithPassword({ email, password });
-      
-      // If sign in fails, it might mean the account hasn't been created yet. Auto-create it!
-      if (error && error.message.includes("Invalid login credentials")) {
-        const { error: signUpError } = await supabase.auth.signUp({
+      if (mode === "signin") {
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+      } else {
+        const { error } = await supabase.auth.signUp({
           email,
           password,
-          options: { data: { full_name: "Naresh Suthar" } },
+          options: { emailRedirectTo: window.location.origin, data: { full_name: fullName } },
         });
-        
-        if (signUpError) throw signUpError;
-        
-        // After signup, we need to sign in again or wait for confirmation depending on Supabase settings.
-        const { error: retryError } = await supabase.auth.signInWithPassword({ email, password });
-        if (retryError) throw retryError;
-      } else if (error) {
-        throw error;
+        if (error) throw error;
       }
       
       const { data } = await supabase.auth.getUser();
       if (!data.user) {
-        toast.success("Account created. Please check your email if confirmation is required.");
+        toast.success("Admin Account Created! Please Sign In now.");
+        setMode("signin");
         return;
       }
       
-      toast.success("Welcome to Admin Dashboard");
+      toast.success("Welcome back");
       navigate({ to: "/admin/dashboard", replace: true });
     } catch (error) {
       toast.error((error as Error).message);
@@ -84,17 +82,52 @@ function AdminLogin() {
       </section>
 
       <section className="flex items-center justify-center px-6 py-20">
-        <form onSubmit={submit} className="w-full max-w-sm space-y-6 text-center">
+        <form onSubmit={submit} className="w-full max-w-sm space-y-6">
           <div>
             <p className="text-[10px] uppercase tracking-[.25em] text-muted-foreground">J.J. INTERIORS & MODUTECH</p>
-            <h2 className="mt-3 display-serif text-4xl">Admin Portal</h2>
-            <p className="mt-2 text-sm text-muted-foreground">Authorized access only.</p>
+            <h2 className="mt-3 display-serif text-4xl">{mode === "signin" ? "Admin Sign In" : "Create Admin"}</h2>
           </div>
           
-          <div className="pt-8">
-            <Button type="submit" disabled={busy} className="w-full rounded-none h-14 text-sm tracking-widest uppercase">
-              {busy ? "Authenticating..." : "Login to Dashboard"}
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input 
+                id="email" 
+                type="email" 
+                value={email} 
+                readOnly 
+                className="bg-muted text-muted-foreground"
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <Input 
+                id="password" 
+                type="text" 
+                value={password} 
+                readOnly 
+                className="bg-muted text-muted-foreground"
+              />
+            </div>
+          </div>
+          
+          <div className="pt-2">
+            <Button type="submit" disabled={busy} className="w-full h-11 text-[11px] tracking-widest uppercase rounded-sm">
+              {busy ? "Please wait..." : mode === "signin" ? "Sign In" : "Create Account"}
             </Button>
+          </div>
+          
+          <div className="text-center">
+            <button
+              type="button"
+              onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
+              className="text-xs text-muted-foreground hover:text-foreground"
+            >
+              {mode === "signin" 
+                ? "First time? Click here to Create Admin Account" 
+                : "Already created? Click here to Sign In"}
+            </button>
           </div>
         </form>
       </section>
