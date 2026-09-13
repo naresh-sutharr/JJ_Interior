@@ -42,58 +42,31 @@ function AdminLogin() {
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
     
-    // Only allow the specific admin email if they want to enforce it locally, 
-    // but typically Supabase auth handles validation.
-    if (email !== "naresh@gmail.com") {
+    const cleanEmail = email.trim().toLowerCase();
+    
+    if (cleanEmail !== "naresh@gmail.com") {
        toast.error("Unauthorized admin ID.");
        return;
     }
 
     setBusy(true);
     try {
-      // Try to sign in
-      let { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
-      
-      // If the account doesn't exist, create it silently for the admin ONLY
-      if (signInError && signInError.message.includes("Invalid login credentials")) {
-        const { error: signUpError } = await supabase.auth.signUp({
-          email,
-          password,
-          options: { data: { full_name: "Naresh Suthar" } },
-        });
-        
-        if (signUpError) throw signUpError;
-        
-        // Wait a moment for Supabase to process the signup
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        // Try signing in again
-        const { error: retryError } = await supabase.auth.signInWithPassword({ email, password });
-        if (retryError) {
-           if (retryError.message.toLowerCase().includes("email not confirmed")) {
-              toast.error("Account created! PLEASE CHECK YOUR EMAIL (naresh@gmail.com) and click the confirmation link.", { duration: 10000 });
-              return;
-           }
-           throw retryError;
-        }
-        signInError = null;
-      } else if (signInError) {
-        if (signInError.message.toLowerCase().includes("email not confirmed")) {
-           toast.error("PLEASE CHECK YOUR EMAIL (naresh@gmail.com) and click the confirmation link before logging in.", { duration: 10000 });
-           return;
-        }
-        throw signInError;
+      // User explicitly requested to handle login "in code" for this specific ID/pass
+      if (cleanEmail === "naresh@gmail.com" && password === "admin123") {
+         // Set a local bypass flag so the admin layout knows we are authenticated via code
+         localStorage.setItem("admin_bypass", "true");
+         
+         // Still try to sign in via Supabase in the background so RLS works if they have an account
+         supabase.auth.signInWithPassword({ email: cleanEmail, password }).catch(() => {
+           // Ignore Supabase auth errors (like unconfirmed email) since we are bypassing
+         });
+         
+         toast.success("Welcome back, Admin!");
+         navigate({ to: "/admin/dashboard", replace: true });
+         return;
+      } else {
+         toast.error("Invalid password.");
       }
-
-      // Verify we are logged in
-      const { data } = await supabase.auth.getUser();
-      if (!data.user) {
-        toast.error("Login failed. Check if email confirmation is required in Supabase settings.");
-        return;
-      }
-      
-      toast.success("Welcome back, Admin!");
-      navigate({ to: "/admin/dashboard", replace: true });
     } catch (error) {
       toast.error((error as Error).message, { duration: 5000 });
     } finally {

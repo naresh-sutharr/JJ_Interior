@@ -1,4 +1,4 @@
-﻿import { createFileRoute, Link, Outlet, redirect, useNavigate, useRouterState } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, redirect, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
@@ -24,6 +24,13 @@ import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescri
 export const Route = createFileRoute("/admin/_panel")({
   ssr: false,
   beforeLoad: async () => {
+    // Check if we logged in via the hardcoded bypass in code
+    const isBypassed = localStorage.getItem("admin_bypass") === "true";
+    if (isBypassed) {
+      return { user: { id: "code_admin", email: "naresh@gmail.com" } };
+    }
+
+    // Otherwise use normal Supabase auth
     const { data, error } = await supabase.auth.getUser();
     if (error || !data.user) throw redirect({ to: "/admin/login" });
     return { user: data.user };
@@ -65,6 +72,7 @@ function AdminPanel() {
   const signOut = async () => {
     await queryClient.cancelQueries();
     queryClient.clear();
+    localStorage.removeItem("admin_bypass");
     await supabase.auth.signOut();
     navigate({ to: "/admin/login", replace: true });
   };
