@@ -2,10 +2,7 @@ import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { z } from "zod";
 
 export const Route = createFileRoute("/admin/login")({
   ssr: false,
@@ -21,19 +18,11 @@ export const Route = createFileRoute("/admin/login")({
   component: AdminLogin,
 });
 
-const schema = z.object({
-  email: z.string().trim().email("Enter a valid email").max(255),
-  password: z.string().min(8, "Password must be at least 8 characters").max(72),
-  fullName: z.string().trim().max(80).optional(),
-});
-
 function AdminLogin() {
   const navigate = useNavigate();
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [fullName, setFullName] = useState("");
   const [busy, setBusy] = useState(false);
+  const email = "naresh@gmail.com";
+  const password = "admin123";
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
@@ -43,31 +32,34 @@ function AdminLogin() {
 
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const parsed = schema.safeParse({ email, password, fullName });
-    if (!parsed.success) {
-      toast.error(parsed.error.issues[0]?.message ?? "Invalid details");
-      return;
-    }
     setBusy(true);
     try {
-      if (mode === "signin") {
-        const { error } = await supabase.auth.signInWithPassword({ email: parsed.data.email, password });
-        if (error) throw error;
-      } else {
-        const { error } = await supabase.auth.signUp({
-          email: parsed.data.email,
+      let { error } = await supabase.auth.signInWithPassword({ email, password });
+      
+      // If sign in fails, it might mean the account hasn't been created yet. Auto-create it!
+      if (error && error.message.includes("Invalid login credentials")) {
+        const { error: signUpError } = await supabase.auth.signUp({
+          email,
           password,
-          options: { emailRedirectTo: window.location.origin, data: { full_name: fullName } },
+          options: { data: { full_name: "Naresh Suthar" } },
         });
-        if (error) throw error;
+        
+        if (signUpError) throw signUpError;
+        
+        // After signup, we need to sign in again or wait for confirmation depending on Supabase settings.
+        const { error: retryError } = await supabase.auth.signInWithPassword({ email, password });
+        if (retryError) throw retryError;
+      } else if (error) {
+        throw error;
       }
+      
       const { data } = await supabase.auth.getUser();
       if (!data.user) {
-        toast.success("Account created. Please sign in.");
-        setMode("signin");
+        toast.success("Account created. Please check your email if confirmation is required.");
         return;
       }
-      toast.success("Welcome back");
+      
+      toast.success("Welcome to Admin Dashboard");
       navigate({ to: "/admin/dashboard", replace: true });
     } catch (error) {
       toast.error((error as Error).message);
@@ -92,45 +84,20 @@ function AdminLogin() {
       </section>
 
       <section className="flex items-center justify-center px-6 py-20">
-        <form onSubmit={submit} className="w-full max-w-sm space-y-6">
+        <form onSubmit={submit} className="w-full max-w-sm space-y-6 text-center">
           <div>
             <p className="text-[10px] uppercase tracking-[.25em] text-muted-foreground">J.J. INTERIORS & MODUTECH</p>
-            <h2 className="mt-3 display-serif text-4xl">{mode === "signin" ? "Admin Sign In" : "Create Admin"}</h2>
+            <h2 className="mt-3 display-serif text-4xl">Admin Portal</h2>
+            <p className="mt-2 text-sm text-muted-foreground">Authorized access only.</p>
           </div>
-          {mode === "signup" && (
-            <div className="space-y-2">
-              <Label htmlFor="fullName">Full name</Label>
-              <Input id="fullName" value={fullName} onChange={(event) => setFullName(event.target.value)} placeholder="Mukesh bhai" />
-            </div>
-          )}
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input id="email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} autoComplete="email" required />
+          
+          <div className="pt-8">
+            <Button type="submit" disabled={busy} className="w-full rounded-none h-14 text-sm tracking-widest uppercase">
+              {busy ? "Authenticating..." : "Login to Dashboard"}
+            </Button>
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
-            <Input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              autoComplete={mode === "signin" ? "current-password" : "new-password"}
-              required
-            />
-          </div>
-          <Button type="submit" className="w-full rounded-none" disabled={busy}>
-            {busy ? "Please wait…" : mode === "signin" ? "Sign In" : "Create Account"}
-          </Button>
-          <button
-            type="button"
-            onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
-            className="w-full cursor-pointer text-center text-xs text-muted-foreground hover:text-foreground"
-          >
-            {mode === "signin" ? "First time? Create the admin account" : "Already have an account? Sign in"}
-          </button>
         </form>
       </section>
     </main>
   );
 }
-
