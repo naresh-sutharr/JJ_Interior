@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import { z } from "zod";
 
 export const Route = createFileRoute("/admin/login")({
   ssr: false,
@@ -13,20 +14,26 @@ export const Route = createFileRoute("/admin/login")({
       { title: "Admin Login — J.J. INTERIORS & MODUTECH" },
       { name: "description", content: "Secure business management login for the J.J. INTERIORS & MODUTECH studio team." },
       { name: "robots", content: "noindex" },
+      { property: "og:title", content: "Admin Login — J.J. INTERIORS & MODUTECH" },
+      { property: "og:description", content: "Secure business management login for J.J. INTERIORS & MODUTECH." },
     ],
   }),
   component: AdminLogin,
 });
 
+const schema = z.object({
+  email: z.string().trim().email("Enter a valid email").max(255),
+  password: z.string().min(6, "Password must be at least 6 characters").max(72),
+  fullName: z.string().trim().max(80).optional(),
+});
+
 function AdminLogin() {
   const navigate = useNavigate();
   const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
   const [busy, setBusy] = useState(false);
-  
-  // Fixed credentials
-  const email = "naresh@gmail.com";
-  const password = "admin123";
-  const fullName = "Naresh Suthar";
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
@@ -36,27 +43,30 @@ function AdminLogin() {
 
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
+    const parsed = schema.safeParse({ email, password, fullName });
+    if (!parsed.success) {
+      toast.error(parsed.error.issues[0]?.message ?? "Invalid details");
+      return;
+    }
     setBusy(true);
     try {
       if (mode === "signin") {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        const { error } = await supabase.auth.signInWithPassword({ email: parsed.data.email, password });
         if (error) throw error;
       } else {
         const { error } = await supabase.auth.signUp({
-          email,
+          email: parsed.data.email,
           password,
           options: { emailRedirectTo: window.location.origin, data: { full_name: fullName } },
         });
         if (error) throw error;
       }
-      
       const { data } = await supabase.auth.getUser();
       if (!data.user) {
-        toast.success("Admin Account Created! Please Sign In now.");
+        toast.success("Account created. Please sign in.");
         setMode("signin");
         return;
       }
-      
       toast.success("Welcome back");
       navigate({ to: "/admin/dashboard", replace: true });
     } catch (error) {
@@ -87,48 +97,67 @@ function AdminLogin() {
             <p className="text-[10px] uppercase tracking-[.25em] text-muted-foreground">J.J. INTERIORS & MODUTECH</p>
             <h2 className="mt-3 display-serif text-4xl">{mode === "signin" ? "Admin Sign In" : "Create Admin"}</h2>
           </div>
-          
-          <div className="space-y-4">
+
+          {mode === "signup" && (
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input 
-                id="email" 
-                type="email" 
-                value={email} 
-                readOnly 
-                className="bg-muted text-muted-foreground"
+              <Label htmlFor="fullName">Full Name</Label>
+              <Input
+                id="fullName"
+                type="text"
+                placeholder="Your name"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                required
+                autoComplete="name"
               />
             </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input 
-                id="password" 
-                type="text" 
-                value={password} 
-                readOnly 
-                className="bg-muted text-muted-foreground"
-              />
-            </div>
+          )}
+
+          <div className="space-y-2">
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="admin@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              autoComplete="email"
+            />
           </div>
-          
-          <div className="pt-2">
-            <Button type="submit" disabled={busy} className="w-full h-11 text-[11px] tracking-widest uppercase rounded-sm">
-              {busy ? "Please wait..." : mode === "signin" ? "Sign In" : "Create Account"}
-            </Button>
+
+          <div className="space-y-2">
+            <Label htmlFor="password">Password</Label>
+            <Input
+              id="password"
+              type="password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              autoComplete={mode === "signup" ? "new-password" : "current-password"}
+            />
           </div>
-          
-          <div className="text-center">
-            <button
-              type="button"
-              onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
-              className="text-xs text-muted-foreground hover:text-foreground"
-            >
-              {mode === "signin" 
-                ? "First time? Click here to Create Admin Account" 
-                : "Already created? Click here to Sign In"}
-            </button>
-          </div>
+
+          <Button type="submit" disabled={busy} className="w-full rounded-none h-11 text-[11px] tracking-widest uppercase">
+            {busy ? "Please wait…" : mode === "signin" ? "Sign In" : "Create Account"}
+          </Button>
+
+          <p className="text-center text-xs text-muted-foreground">
+            {mode === "signin" ? (
+              <>First time?{" "}
+                <button type="button" onClick={() => setMode("signup")} className="underline hover:text-foreground">
+                  Create admin account
+                </button>
+              </>
+            ) : (
+              <>Already have an account?{" "}
+                <button type="button" onClick={() => setMode("signin")} className="underline hover:text-foreground">
+                  Sign in
+                </button>
+              </>
+            )}
+          </p>
         </form>
       </section>
     </main>
