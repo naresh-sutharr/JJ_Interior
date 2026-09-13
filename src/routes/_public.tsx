@@ -32,20 +32,20 @@ function PublicLayout() {
       {/* Premium Glassmorphic Header */}
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-          scrolled ? "glass-nav py-3" : "bg-transparent py-5"
+          scrolled ? "glass-nav py-3" : "bg-transparent py-4 md:py-5"
         }`}
       >
-        <div className="container mx-auto px-6 grid grid-cols-[auto_1fr_auto] items-center gap-8">
+        <div className="container mx-auto px-4 md:px-6 grid grid-cols-[auto_1fr_auto] items-center gap-4 md:gap-8">
           
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-4 w-fit cursor-pointer animate-in fade-in slide-in-from-bottom-4 duration-1000">
+          {/* Logo & Brand */}
+          <Link to="/" className="flex items-center gap-3 w-fit cursor-pointer animate-in fade-in slide-in-from-bottom-4 duration-1000">
             <img 
               src={jayJasolLogo} 
               alt="Jay Jasol Interiors & Modutech Logo" 
-              className="h-14 w-auto object-contain drop-shadow-2xl bg-white/10 rounded-sm p-1" 
+              className="h-10 md:h-14 w-auto object-contain drop-shadow-2xl bg-white/10 rounded-sm p-0.5" 
             />
-            <span className="hidden md:block font-display text-2xl tracking-widest text-white/90">
-              JAY JASOL <span className="text-[#d4af37]">INTERIORS</span>
+            <span className="font-display text-lg md:text-2xl tracking-widest text-white/90 whitespace-nowrap">
+              JAY JASOL <span className="text-[#d4af37] hidden sm:inline">INTERIORS</span>
             </span>
           </Link>
           
@@ -64,26 +64,29 @@ function PublicLayout() {
           </nav>
           
           {/* Actions */}
-          <div className="flex justify-end gap-4 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300 fill-mode-both">
+          <div className="flex items-center justify-end gap-3 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300 fill-mode-both">
             <Button 
-              className="hidden md:flex h-11 rounded-none bg-transparent border border-white/20 text-white hover:bg-white hover:text-black transition-colors px-6 text-[11px] uppercase tracking-[0.18em]" 
+              className="hidden lg:flex h-11 rounded-none bg-transparent border border-white/20 text-white hover:bg-white hover:text-black transition-colors px-6 text-[11px] uppercase tracking-[0.18em]" 
               asChild
             >
               <Link to="/contact">Start a Project</Link>
             </Button>
+            
+            {/* Admin Portal Button - VISIBLE ON MOBILE NOW */}
             <Button 
-              className="hidden lg:flex h-11 rounded-sm premium-btn px-6 text-[11px] font-bold uppercase tracking-[0.15em]" 
+              className="flex h-9 md:h-11 rounded-sm premium-btn px-4 md:px-6 text-[10px] md:text-[11px] font-bold uppercase tracking-[0.15em]" 
               asChild
             >
-              <Link to="/admin/login">Admin Portal <ArrowRight className="ml-2 h-3.5 w-3.5" /></Link>
+              <Link to="/admin/login">Admin <ArrowRight className="ml-1.5 md:ml-2 h-3.5 w-3.5 hidden sm:block" /></Link>
             </Button>
+            
             <Button 
               variant="ghost" 
               size="icon" 
-              className="lg:hidden text-white hover:bg-white/10" 
+              className="lg:hidden text-white hover:bg-white/10 h-9 w-9" 
               onClick={() => setMenuOpen(!menuOpen)}
             >
-              {menuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
           </div>
         </div>
