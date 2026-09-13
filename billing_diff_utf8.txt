@@ -1,0 +1,99 @@
+﻿diff --git "a/Tulsi interior\\src\\components\\Billing.jsx" "b/src\\routes\\admin.billing.tsx"
+index 2540d48..5b78ca9 100644
+--- "a/Tulsi interior\\src\\components\\Billing.jsx"	
++++ "b/src\\routes\\admin.billing.tsx"
+@@ -1,8 +1,12 @@
+ import React, { useState, useEffect, useRef } from 'react';
+-import { useClients } from '../context/ClientContext';
++import { createFileRoute } from "@tanstack/react-router";
++import { useRows, useSaveRow, useBusinessProfile } from "@/hooks/use-admin";
++import { toast } from "sonner";
++
++
+ import { Plus, Trash2, Download, Save, PlusCircle, User, FileText, Calendar, IndianRupee, Search, MapPin, Phone, FolderPlus, CreditCard, ChevronDown, Check, Edit2 } from 'lucide-react';
+-import { logoBase64 } from '../assets/logoBase64';
+-import { downloadPDF } from '../utils/pdfExport';
++import { logoBase64 } from '@/utils/logoBase64';
++import { downloadPDF } from '@/utils/pdfExport';
+ 
+ // Lord Ganesha SVG matching top-left stamp of the reference invoice
+ export const GaneshaSVG = ({ className = "h-11 w-11" }) => (
+@@ -93,8 +97,70 @@ export const BillHeaderLogo = ({ className = "h-11 w-11" }) => (
+   </svg>
+ );
+ 
+-const Billing = () => {
+-  const { clients, items, createInvoice, getNextInvoiceNo, operatorSettings, draftInvoice, setDraftInvoice } = useClients();
++export const Route = createFileRoute('/admin/billing')({
++  component: Billing,
++});
++
++function Billing() {
++
++  const { data: dbClients = [] } = useRows('clients');
++  const { data: dbItems = [] } = useRows('catalog');
++  const { data: dbInvoices = [] } = useRows('invoices');
++  const { data: operatorData } = useBusinessProfile();
++  
++  const addInvoiceRow = useSaveRow('invoices');
++
++  const clients = dbClients.map(c => ({
++    id: c.id,
++    name: c.name,
++    city: c.city || 'Vadodara',
++    phone: c.phone || '',
++    billed: c.total_billed || 0,
++    paid: c.total_paid || 0
++  }));
++
++  const items = dbItems.map(c => ({
++    id: c.id,
++    name: c.name,
++    type: c.category || 'With Material',
++    rate: c.default_rate || 0
++  }));
++
++  const operatorSettings = operatorData || {
++    name: 'Gopalram P. Suthar',
++    role: 'Authorized Operator',
++    businessName: 'Tulsi Interior',
++    address: '148, Randaldham Socity, Chanakyapuri, New Sama Road, VADODARA - 390008',
++    phone: '94270549218',
++    panCard: 'CMYPS4786H',
++    jurisdiction: 'Vadodara'
++  };
++
++  const draftInvoice = null;
++  const setDraftInvoice = () => {};
++  
++  // mock createInvoice, getNextInvoiceNo since they were from useClients
++  const getNextInvoiceNo = React.useCallback(() => {
++    return 'TI-' + Math.floor(Math.random() * 10000);
++  }, []);
++  const createInvoice = () => {};
++
++  const addInvoice = async (invoiceData) => {
++    try {
++      await addInvoiceRow.mutateAsync({
++        number: invoiceData.invoiceNo,
++        date: invoiceData.date,
++        client_id: null,
++        grand_total: invoiceData.totalAmount,
++        status: invoiceData.paymentMode === 'Pending' ? 'pending' : 'paid',
++        items: invoiceData.sections
++      });
++      toast.success('Invoice saved to database!');
++    } catch (e) {
++      toast.error('Failed to save invoice');
++    }
++  };
++
+ 
+   // Kachcha (Estimate) vs Pakka (Tax Invoice) billing type toggle
+   const [billType, setBillType] = useState('Pakka'); // 'Kachcha' | 'Pakka'
+@@ -1278,4 +1344,4 @@ const Billing = () => {
+   );
+ };
+ 
+-export default Billing;
++
