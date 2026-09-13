@@ -127,13 +127,13 @@ function Billing() {
   }));
 
   const operatorSettings = operatorData || {
-    name: 'Gopalram P. Suthar',
+    name: 'Mukesh bhai Suthar',
     role: 'Authorized Operator',
-    businessName: 'Tulsi Interior',
-    address: '148, Randaldham Socity, Chanakyapuri, New Sama Road, VADODARA - 390008',
-    phone: '94270549218',
+    businessName: 'J.J. INTERIORS & MODUTECH',
+    address: 'Surat, Gujarat',
+    phone: '9898412998',
     panCard: 'CMYPS4786H',
-    jurisdiction: 'Vadodara'
+    jurisdiction: 'Surat'
   };
 
   const draftInvoice = null;
@@ -582,7 +582,7 @@ function Billing() {
                     <div className="w-full flex items-center justify-between pt-1.5 px-1">
                       {/* Brand Logo - LARGER */}
                       <div className="flex-shrink-0">
-                        <img src={logoBase64} alt="Tulsi Logo" className="h-[80px] w-[80px] object-contain rounded-md" />
+                        <img src="/mukeshlogo.jpg" alt="J.J. Interiors Logo" className="h-[80px] w-auto object-contain rounded-md bg-white" />
                       </div>
                       
                       {/* Main Header text */}
@@ -591,10 +591,10 @@ function Billing() {
                           className="select-none text-[28px] font-semibold text-brand-red leading-tight"
                           style={{ fontFamily: "'Times New Roman', Times, serif" }}
                         >
-                          Tulsi Interior
+                          J.J. INTERIORS & MODUTECH
                         </h1>
                         <div className="text-slate-900 font-display font-black text-[10px] tracking-[0.25em] uppercase mt-0.5 leading-none select-none">
-                          WOODEN FURNITURE MAKERS
+                          FURNITURE MAKERS
                         </div>
                         <div className="text-[8px] text-slate-800 font-bold mt-1.5 uppercase select-none tracking-widest text-center">
                           {operatorSettings?.address || '148, RANDALDHAM SOCIETY, CHANAKYAPURI, NEW SAMA ROAD, VADODARA - 390008'}

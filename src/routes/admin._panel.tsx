@@ -24,13 +24,6 @@ import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescri
 export const Route = createFileRoute("/admin/_panel")({
   ssr: false,
   beforeLoad: async () => {
-    // Check if we logged in via the hardcoded bypass in code
-    const isBypassed = localStorage.getItem("admin_bypass") === "true";
-    if (isBypassed) {
-      return { user: { id: "code_admin", email: "naresh@gmail.com" } };
-    }
-
-    // Otherwise use normal Supabase auth
     const { data, error } = await supabase.auth.getUser();
     if (error || !data.user) throw redirect({ to: "/admin/login" });
     return { user: data.user };
@@ -81,23 +74,16 @@ function AdminPanel() {
     <div className="flex h-full flex-col bg-[#fdfaf6] dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800">
       <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center bg-gradient-to-r from-[var(--brand-accent)]/5 to-transparent">
         <div className="flex items-center space-x-2">
-          <div className="w-14 h-14 flex-shrink-0 flex items-center justify-center">
-            <img src="/logo.jpeg" alt="Logo" className="h-12 w-12 object-contain rounded-lg shadow-sm" />
-          </div>
-          <div className="pr-2">
-            <h2 
-              className="text-2xl text-slate-800 dark:text-slate-100 tracking-wide leading-none mt-1 font-bold"
-              style={{ 
-                fontFamily: "'Dancing Script', cursive",
-                textShadow: '0.4px 0px 0px currentColor'
-              }}
-            >
-              J.J. INTERIORS & MODUTECH
-            </h2>
-            <span className="text-[9px] uppercase tracking-widest font-extrabold text-slate-500 dark:text-slate-400 block mt-1">
-              Furniture Makers
-            </span>
-          </div>
+          <Link to="/admin/dashboard" className="flex items-center gap-3 py-6 px-6 cursor-pointer">
+            <img src="/mukeshlogo.jpg" alt="J.J. Interiors Logo" className="h-12 w-auto object-contain rounded bg-white shadow-sm" />
+            <div className="flex flex-col">
+              <span className="font-bold text-sm tracking-widest text-primary display-serif">J.J.</span>
+              <span className="font-bold text-sm tracking-widest text-primary display-serif -mt-1">INTERIORS</span>
+              <span className="font-bold text-xs tracking-widest text-primary display-serif">&</span>
+              <span className="font-bold text-sm tracking-widest text-primary display-serif -mt-1">MODUTECH</span>
+              <span className="text-[6px] uppercase tracking-widest font-semibold mt-1 text-muted-foreground">FURNITURE MAKERS</span>
+            </div>
+          </Link>
         </div>
       </div>
 
@@ -162,10 +148,11 @@ function AdminPanel() {
 
       <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-4 md:hidden shadow-sm">
         <div className="flex items-center space-x-3">
-          <img src="/logo.jpeg" alt="Logo" className="h-9 w-9 object-contain rounded" />
-          <h1 className="text-lg font-bold font-serif text-slate-800 dark:text-slate-100 truncate" style={{ fontFamily: "'Dancing Script', cursive" }}>
-            J.J. INTERIORS
-          </h1>
+          <img src="/mukeshlogo.jpg" alt="Logo" className="h-9 w-auto object-contain rounded" />
+          <div className="flex flex-col">
+            <span className="font-bold text-sm tracking-widest text-primary display-serif">J.J. INTERIORS</span>
+            <span className="text-[8px] uppercase tracking-widest font-semibold mt-0.5 text-muted-foreground">& MODUTECH</span>
+          </div>
         </div>
         <div className="flex items-center space-x-1">
           <button className="min-h-[44px] min-w-[44px] flex items-center justify-center text-slate-500 dark:text-slate-400">

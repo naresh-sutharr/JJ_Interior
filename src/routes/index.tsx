@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowDown, ArrowRight, Menu, X } from "lucide-react";
+import { ArrowDown, ArrowRight, Menu, X, MessageCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import heroImage from "@/assets/hero-residence.jpg";
@@ -10,10 +10,8 @@ import bespokeImage from "@/assets/project-bespoke.jpg";
 import portraitImage from "@/assets/studio-portrait.jpg";
 import materialImage from "@/assets/material-study.jpg";
 
-import jjLogo from "@/assets/jj_logo.jpg";
 import mukeshPhoto from "@/assets/mukesh_photo1.jpg";
 import { useRows } from "@/hooks/use-admin";
-
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -34,12 +32,12 @@ const navItems = ["Home", "About", "Projects", "Services", "Contact"];
 const services = ["Interior Design", "Residential Interiors", "Luxury Villas", "Commercial Interiors", "Turnkey Projects", "Custom Furniture"];
 const serviceImages = [residenceImage, villaImage, bespokeImage, officeImage, heroImage, materialImage];
 
-const projects = [
-  { name: "The Aster Residence", location: "Mumbai", year: "2026", type: "Luxury Residence", image: residenceImage, vertical: true },
-  { name: "Villa Sereno", location: "Goa", year: "2025", type: "Modern Villa", image: villaImage, vertical: false },
-  { name: "One Meridian", location: "New York", year: "2026", type: "Contemporary Office", image: officeImage, vertical: false },
-  { name: "Maison Privée", location: "London", year: "2025", type: "Bespoke Interior", image: bespokeImage, vertical: true },
-];
+// Contact Info
+const WHATSAPP_NUMBER = "+919898412998";
+const WHATSAPP_LINK = `https://wa.me/919898412998?text=${encodeURIComponent("Hello Mukesh bhai, I am interested in your interior design services...")}`;
+const PHONE_NUMBER = "+91 9898412998";
+const EMAIL_ADDRESS = "mukesh.jj.interiors@gmail.com";
+const INSTAGRAM_HANDLE = "mukesh_p_suthar_89";
 
 function usePageEffects() {
   const [scrolled, setScrolled] = useState(false);
@@ -58,13 +56,27 @@ function usePageEffects() {
 
 function Index() {
   const scrolled = usePageEffects();
-  const dynamicProjects: any[] = []; // Disabled useRows for public until RLS is fixed
+  
+  // Fetch projects from DB
+  const { data: dbProjects } = useRows<any>("projects", { select: "*", order: "created_at" });
 
-  // Combine dynamic projects with defaults if none exist yet
-  const projects = dynamicProjects.length > 0 ? dynamicProjects : [
-    { name: "The Aster Residence", location: "Mumbai", year: "2026", type: "Luxury Residence", image: residenceImage, vertical: true },
-    { name: "Villa Sereno", location: "Goa", year: "2025", type: "Modern Villa", image: villaImage, vertical: false },
-  ];
+  // Map DB projects or use defaults if empty
+  const activeProjects = (dbProjects && dbProjects.length > 0) 
+    ? dbProjects.slice(0, 4).map((p, i) => ({
+        name: p.name,
+        location: p.location || "India",
+        year: p.year || p.start_date?.substring(0,4) || new Date().getFullYear().toString(),
+        type: p.project_type || "Interior Design",
+        image: i % 2 === 0 ? residenceImage : villaImage, // Fallback images until image upload is added
+        vertical: i % 2 === 0
+      }))
+    : [
+        { name: "The Aster Residence", location: "Mumbai", year: "2026", type: "Luxury Residence", image: residenceImage, vertical: true },
+        { name: "Villa Sereno", location: "Goa", year: "2025", type: "Modern Villa", image: villaImage, vertical: false },
+        { name: "One Meridian", location: "New York", year: "2026", type: "Contemporary Office", image: officeImage, vertical: false },
+        { name: "Maison Privée", location: "London", year: "2025", type: "Bespoke Interior", image: bespokeImage, vertical: true },
+      ];
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [serviceIndex, setServiceIndex] = useState(0);
   const scrollTo = (id: string) => { document.getElementById(id.toLowerCase())?.scrollIntoView({ behavior: "smooth" }); setMenuOpen(false); };
@@ -74,7 +86,7 @@ function Index() {
       <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled ? "border-b border-border bg-background/95 text-foreground backdrop-blur" : "text-hero-foreground"}`}>
         <div className="section-shell grid h-20 grid-cols-[minmax(0,1fr)_auto] items-center md:h-24 md:grid-cols-[1fr_auto_1fr]">
           <button onClick={() => scrollTo("home")} className="flex items-center gap-3 w-fit cursor-pointer text-left display-serif text-xl tracking-normal md:text-2xl" aria-label="J.J. INTERIORS & MODUTECH home">
-            <img src={jjLogo} alt="J.J. Interiors Logo" className="h-12 w-auto object-contain rounded" />
+            <img src="/mukeshlogo.jpg" alt="J.J. Interiors Logo" className="h-12 w-auto object-contain rounded" />
             <span className="hidden md:inline-block">J.J. INTERIORS & MODUTECH</span>
           </button>
           <nav className="hidden items-center gap-8 md:flex" aria-label="Main navigation">
@@ -95,7 +107,7 @@ function Index() {
         <img src={heroImage} alt="Double-height luxury residence with travertine walls and walnut detailing" width={1920} height={1088} fetchPriority="high" className="hero-image absolute inset-0 h-full w-full object-cover" />
         <div className="absolute inset-0 bg-hero/45" />
         <div className="section-shell relative flex min-h-[100svh] flex-col justify-end pb-14 pt-32 md:pb-16">
-          <p className="hero-copy mb-7 text-[10px] uppercase tracking-[.3em] text-hero-foreground/75">Interior Architecture · Mumbai & Worldwide</p>
+          <p className="hero-copy mb-7 text-[10px] uppercase tracking-[.3em] text-hero-foreground/75">Interior Architecture · Surat & Worldwide</p>
           <h1 className="hero-title max-w-5xl display-serif text-[clamp(3rem,8vw,7.6rem)] leading-[.88]">CRAFTING SPACES<br />THAT DEFINE LUXURY</h1>
           <div className="hero-copy mt-9 flex flex-col items-start justify-between gap-8 border-t border-hero-foreground/35 pt-6 md:flex-row md:items-end">
             <p className="max-w-md text-sm font-light leading-7 text-hero-foreground/80 md:text-base">Thoughtfully designed interiors where architecture, material and emotion come together.</p>
@@ -114,7 +126,7 @@ function Index() {
 
       <section id="projects" className="bg-hero py-28 text-hero-foreground md:py-44">
         <div className="section-shell"><div className="reveal flex items-end justify-between border-b border-hero-foreground/25 pb-8"><div><p className="mb-5 text-[10px] uppercase tracking-[.25em] text-hero-foreground/55">02 · Selected Work</p><h2 className="display-serif text-5xl md:text-7xl">Featured Projects</h2></div><p className="hidden text-[10px] uppercase tracking-[.2em] text-hero-foreground/55 md:block">2023—2026</p></div>
-          <div className="mt-20 space-y-24 md:space-y-40">{projects.map((project, index) => <article key={project.name} className={`reveal group grid gap-5 md:grid-cols-12 ${index % 2 ? "md:text-right" : ""}`}>
+          <div className="mt-20 space-y-24 md:space-y-40">{activeProjects.map((project, index) => <article key={project.name} className={`reveal group grid gap-5 md:grid-cols-12 ${index % 2 ? "md:text-right" : ""}`}>
             <div className={`overflow-hidden ${project.vertical ? "md:col-span-7" : "md:col-span-10"} ${index % 2 ? "md:col-start-6" : ""}`}><img src={project.image} alt={`${project.type} interior — ${project.name}`} width={project.vertical ? 1200 : 1600} height={project.vertical ? 1504 : 1104} loading="lazy" className={`${project.vertical ? "aspect-[4/5] md:aspect-[16/10]" : "aspect-[4/3] md:aspect-[16/9]"} w-full object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.035]`} /></div>
             <div className={`flex items-start justify-between gap-6 md:col-span-5 ${index % 2 ? "md:col-start-1 md:row-start-1 md:flex-col md:justify-end md:items-end" : "md:flex-col md:justify-end"}`}><div><p className="mb-2 text-[10px] uppercase tracking-[.18em] text-champagne">{project.type}</p><h3 className="display-serif text-3xl md:text-5xl">{project.name}</h3></div><p className="shrink-0 text-[10px] uppercase leading-6 tracking-[.17em] text-hero-foreground/55">{project.location}<br />{project.year}</p></div>
           </article>)}</div>
@@ -136,11 +148,22 @@ function Index() {
 
       <section className="section-shell py-28 md:py-44"><div className="reveal mb-16 md:flex md:items-end md:justify-between"><div><p className="mb-5 text-[10px] uppercase tracking-[.25em] text-muted-foreground">06 · Details & Atmosphere</p><h2 className="display-serif text-5xl md:text-7xl">A Study in Material</h2></div></div><div className="grid grid-cols-2 items-start gap-3 md:grid-cols-12 md:gap-6"><img src={villaImage} alt="Sunlit limestone villa courtyard" width={1600} height={1104} loading="lazy" className="reveal col-span-2 aspect-[4/3] w-full object-cover md:col-span-7" /><img src={bespokeImage} alt="Custom walnut dressing room" width={1200} height={1504} loading="lazy" className="reveal aspect-[3/4] w-full object-cover md:col-span-4 md:col-start-9 md:mt-28" /><img src={materialImage} alt="Luxury natural material study" width={1408} height={1008} loading="lazy" className="reveal aspect-square w-full object-cover md:col-span-4 md:col-start-2 md:-mt-20" /><img src={officeImage} alt="Dark oak executive office" width={1600} height={1104} loading="lazy" className="reveal col-span-2 aspect-[16/10] w-full object-cover md:col-span-6 md:col-start-7 md:mt-16" /></div></section>
 
-      <section className="bg-stone py-28 md:py-44"><div className="section-shell reveal mx-auto max-w-5xl text-center"><p className="mb-12 text-[10px] uppercase tracking-[.25em] text-muted-foreground">Client Perspective</p><blockquote className="display-serif text-[clamp(2.1rem,4.5vw,5rem)] leading-[1.12]">“J.J. INTERIORS & MODUTECH understood that true luxury is not excess. It is the feeling that every detail belongs exactly where it is.”</blockquote><p className="mt-10 text-[10px] uppercase tracking-[.22em]">Private Residence · Mumbai</p></div></section>
+      <section className="bg-stone py-28 md:py-44"><div className="section-shell reveal mx-auto max-w-5xl text-center"><p className="mb-12 text-[10px] uppercase tracking-[.25em] text-muted-foreground">Client Perspective</p><blockquote className="display-serif text-[clamp(2.1rem,4.5vw,5rem)] leading-[1.12]">“J.J. INTERIORS & MODUTECH understood that true luxury is not excess. It is the feeling that every detail belongs exactly where it is.”</blockquote><p className="mt-10 text-[10px] uppercase tracking-[.22em]">Private Residence · Surat</p></div></section>
 
-      <section id="contact" className="relative min-h-[85vh] overflow-hidden bg-hero text-hero-foreground"><img src={heroImage} alt="J.J. INTERIORS & MODUTECH luxury residence at dusk" width={1920} height={1088} loading="lazy" className="absolute inset-0 h-full w-full scale-105 object-cover opacity-25" /><div className="section-shell relative flex min-h-[85vh] flex-col justify-center py-28"><div className="reveal"><p className="mb-8 text-[10px] uppercase tracking-[.25em] text-champagne">Begin a Conversation</p><h2 className="display-serif text-[clamp(3.5rem,9vw,8.5rem)] leading-[.88]">LET'S CREATE<br />SOMETHING TIMELESS.</h2><div className="mt-14 flex flex-wrap gap-x-8 gap-y-5"><a href="mailto:studio@jjinteriors.com" className="group flex items-center gap-2 border-b border-hero-foreground/50 pb-2 text-xs uppercase tracking-[.18em]">Start a Project <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" /></a><a href="https://wa.me/919876543210" className="border-b border-hero-foreground/50 pb-2 text-xs uppercase tracking-[.18em]">WhatsApp</a><a href="tel:+919876543210" className="border-b border-hero-foreground/50 pb-2 text-xs uppercase tracking-[.18em]">Phone</a><a href="mailto:studio@jjinteriors.com" className="border-b border-hero-foreground/50 pb-2 text-xs uppercase tracking-[.18em]">Email</a></div></div></div></section>
+      <section id="contact" className="relative min-h-[85vh] overflow-hidden bg-hero text-hero-foreground"><img src={heroImage} alt="J.J. INTERIORS & MODUTECH luxury residence at dusk" width={1920} height={1088} loading="lazy" className="absolute inset-0 h-full w-full scale-105 object-cover opacity-25" /><div className="section-shell relative flex min-h-[85vh] flex-col justify-center py-28"><div className="reveal"><p className="mb-8 text-[10px] uppercase tracking-[.25em] text-champagne">Begin a Conversation</p><h2 className="display-serif text-[clamp(3.5rem,9vw,8.5rem)] leading-[.88]">LET'S CREATE<br />SOMETHING TIMELESS.</h2><div className="mt-14 flex flex-wrap gap-x-8 gap-y-5"><a href={`mailto:${EMAIL_ADDRESS}`} className="group flex items-center gap-2 border-b border-hero-foreground/50 pb-2 text-xs uppercase tracking-[.18em]">Start a Project <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" /></a><a href={WHATSAPP_LINK} target="_blank" rel="noreferrer" className="border-b border-hero-foreground/50 pb-2 text-xs uppercase tracking-[.18em]">WhatsApp</a><a href={`tel:${WHATSAPP_NUMBER}`} className="border-b border-hero-foreground/50 pb-2 text-xs uppercase tracking-[.18em]">Phone</a><a href={`mailto:${EMAIL_ADDRESS}`} className="border-b border-hero-foreground/50 pb-2 text-xs uppercase tracking-[.18em]">Email</a></div></div></div></section>
 
-      <footer className="bg-hero px-4 pb-10 text-hero-foreground"><div className="section-shell border-t border-hero-foreground/20 pt-12"><div className="grid gap-12 md:grid-cols-4"><div><p className="display-serif text-3xl">J.J. INTERIORS & MODUTECH</p><p className="mt-3 text-[10px] uppercase tracking-[.2em] text-hero-foreground/45">Interior Architecture Studio</p></div><div className="space-y-3 text-xs">{navItems.map((item) => <button key={item} onClick={() => scrollTo(item)} className="block cursor-pointer hover:opacity-55">{item}</button>)}</div><div className="space-y-3 text-xs"><a className="block hover:opacity-55" href="https://instagram.com">Instagram</a><a className="block hover:opacity-55" href="https://wa.me/919876543210">WhatsApp</a><a className="block hover:opacity-55" href="mailto:studio@jjinteriors.com">studio@jjinteriors.com</a></div><div className="text-xs leading-6 text-hero-foreground/65">Mumbai, India<br />Projects Worldwide<br /><br /><a href="/admin/login" className="hover:text-champagne transition-colors">Admin Portal →</a></div></div><div className="mt-16 flex flex-col gap-3 border-t border-hero-foreground/20 pt-6 text-[9px] uppercase tracking-[.18em] text-hero-foreground/40 sm:flex-row sm:justify-between"><p>© 2026 J.J. INTERIORS & MODUTECH</p><p>Spaces with enduring soul</p></div></div></footer>
+      <footer className="bg-hero px-4 pb-10 text-hero-foreground"><div className="section-shell border-t border-hero-foreground/20 pt-12"><div className="grid gap-12 md:grid-cols-4"><div><p className="display-serif text-3xl">J.J. INTERIORS & MODUTECH</p><p className="mt-3 text-[10px] uppercase tracking-[.2em] text-hero-foreground/45">Interior Architecture Studio</p></div><div className="space-y-3 text-xs">{navItems.map((item) => <button key={item} onClick={() => scrollTo(item)} className="block cursor-pointer hover:opacity-55">{item}</button>)}</div><div className="space-y-3 text-xs"><a className="block hover:opacity-55" href={`https://instagram.com/${INSTAGRAM_HANDLE}`} target="_blank" rel="noreferrer">Instagram</a><a className="block hover:opacity-55" href={WHATSAPP_LINK} target="_blank" rel="noreferrer">WhatsApp</a><a className="block hover:opacity-55" href={`mailto:${EMAIL_ADDRESS}`}>Email Studio</a></div><div className="text-xs leading-6 text-hero-foreground/65">Surat, Gujarat<br />Projects Worldwide<br /><br /><a href="/admin/login" className="hover:text-champagne transition-colors">Admin Portal →</a></div></div><div className="mt-16 flex flex-col gap-3 border-t border-hero-foreground/20 pt-6 text-[9px] uppercase tracking-[.18em] text-hero-foreground/40 sm:flex-row sm:justify-between"><p>© {new Date().getFullYear()} J.J. INTERIORS & MODUTECH</p><p>Spaces with enduring soul</p></div></div></footer>
+
+      {/* Floating WhatsApp Button */}
+      <a 
+        href={WHATSAPP_LINK} 
+        target="_blank" 
+        rel="noreferrer"
+        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform hover:scale-110 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-[#25D366]/50"
+        aria-label="Chat on WhatsApp"
+      >
+        <MessageCircle className="h-7 w-7" />
+      </a>
     </main>
   );
 }
