@@ -35,6 +35,7 @@ const projectSchema = z.object({
   project_type: z.string().optional(),
   status: z.string().default("Planning"),
   budget: z.coerce.number().min(0).optional(),
+  image_url: z.string().optional(),
   start_date: z.string().optional(),
   expected_completion: z.string().optional(),
   notes: z.string().optional(),
@@ -64,6 +65,7 @@ function NewProject() {
       project_type: "",
       status: "Planning",
       budget: 0,
+      image_url: "",
       start_date: "",
       expected_completion: "",
       notes: "",
@@ -261,6 +263,22 @@ function NewProject() {
                 </FormItem>
               )}
             />
+
+            <div className="col-span-1 md:col-span-2">
+              <FormField
+                control={form.control}
+                name="image_url"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Project Image URL</FormLabel>
+                    <FormControl>
+                      <Input placeholder="https://images.unsplash.com/... or /assets/project.jpg" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
             <div className="col-span-1 md:col-span-2">
               <FormField

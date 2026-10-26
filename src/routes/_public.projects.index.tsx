@@ -23,7 +23,7 @@ function ProjectsPage() {
         location: p.location || "Surat, Gujarat",
         year: p.year || p.start_date?.substring(0,4) || new Date().getFullYear().toString(),
         type: p.project_type || "Interior Design",
-        image: i % 2 === 0 ? residenceImage : villaImage, // Using fallbacks until actual image support
+        image: p.cover_image || p.image_url || p.image || (i % 2 === 0 ? residenceImage : villaImage),
       }))
     : [
         { id: "1", name: "The Aster Residence", location: "Vesu, Surat", year: "2026", type: "Residential Interior Design", image: residenceImage },

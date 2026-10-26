@@ -75,7 +75,7 @@ function Index() {
         location: p.location || "India",
         year: p.year || p.start_date?.substring(0,4) || new Date().getFullYear().toString(),
         type: p.project_type || "Interior Design",
-        image: i % 2 === 0 ? residenceImage : villaImage,
+        image: p.cover_image || p.image_url || p.image || (i % 2 === 0 ? residenceImage : villaImage),
         vertical: i % 2 === 0
       }))
     : [

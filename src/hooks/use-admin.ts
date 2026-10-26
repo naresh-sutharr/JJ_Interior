@@ -8,14 +8,24 @@ export function useRows<T = Row>(table: string, options?: { select?: string; ord
   return useQuery({
     queryKey: [table, options?.select ?? "*", options?.order ?? "created_at"],
     queryFn: async () => {
-      const query = supabase
-        .from(table as never)
-        .select(options?.select ?? "*")
-        .order(options?.order ?? "created_at", { ascending: options?.ascending ?? false });
-      const { data, error } = await query;
-      if (error) throw error;
-      return (data ?? []) as T[];
+      try {
+        const query = supabase
+          .from(table as never)
+          .select(options?.select ?? "*")
+          .order(options?.order ?? "created_at", { ascending: options?.ascending ?? false });
+        const { data, error } = await query;
+        if (error) {
+          console.warn(`[useRows] ${table} fetch warning:`, error.message);
+          return [] as T[];
+        }
+        return (data ?? []) as T[];
+      } catch (err) {
+        console.warn(`[useRows] ${table} failed:`, err);
+        return [] as T[];
+      }
     },
+    retry: 1,
+    staleTime: 1000 * 60 * 3,
   });
 }
 
@@ -74,10 +84,20 @@ export function useBusinessProfile() {
   return useQuery({
     queryKey: ["business_profile"],
     queryFn: async () => {
-      const { data, error } = await supabase.from("business_profile").select("*").limit(1).maybeSingle();
-      if (error) throw error;
-      return data;
+      try {
+        const { data, error } = await supabase.from("business_profile").select("*").limit(1).maybeSingle();
+        if (error) {
+          console.warn("[useBusinessProfile] Fetch warning:", error.message);
+          return null;
+        }
+        return data;
+      } catch (err) {
+        console.warn("[useBusinessProfile] Failed:", err);
+        return null;
+      }
     },
+    retry: 1,
+    staleTime: 1000 * 60 * 5,
   });
 }
 
