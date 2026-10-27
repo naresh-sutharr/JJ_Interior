@@ -112,12 +112,12 @@ function ClientDetails() {
             </div>
             <div className="pt-4 flex gap-3">
               <Button asChild variant="outline" className="flex-1">
-                <Link to="/admin/projects/new" search={{ clientId: client.id }}>
+                <Link to="/admin/projects/new" search={{ clientId: client.id } as any}>
                   <Building2 className="mr-2 h-4 w-4" /> New Project
                 </Link>
               </Button>
               <Button asChild className="flex-1">
-                <Link to="/admin/invoices/new" search={{ clientId: client.id }}>
+                <Link to="/admin/invoices/new" search={{ clientId: client.id } as any}>
                   <Receipt className="mr-2 h-4 w-4" /> New Invoice
                 </Link>
               </Button>

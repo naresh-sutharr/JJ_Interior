@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
-type Row = Record<string, unknown>;
+type Row = Record<string, any>;
 
 export function useRows<T = Row>(table: string, options?: { select?: string; order?: string; ascending?: boolean }) {
   return useQuery({
@@ -81,7 +81,7 @@ export function useDeleteRow(table: string, message = "Deleted") {
 }
 
 export function useBusinessProfile() {
-  return useQuery({
+  return useQuery<any>({
     queryKey: ["business_profile"],
     queryFn: async () => {
       try {
@@ -90,7 +90,7 @@ export function useBusinessProfile() {
           console.warn("[useBusinessProfile] Fetch warning:", error.message);
           return null;
         }
-        return data;
+        return data as any;
       } catch (err) {
         console.warn("[useBusinessProfile] Failed:", err);
         return null;

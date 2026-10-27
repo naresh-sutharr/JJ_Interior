@@ -57,7 +57,7 @@ function NewProject() {
   });
 
   const form = useForm<ProjectFormValues>({
-    resolver: zodResolver(projectSchema),
+    resolver: zodResolver(projectSchema) as any,
     defaultValues: {
       client_id: searchParams.clientId || "",
       name: "",
@@ -83,18 +83,18 @@ function NewProject() {
       
       const { data, error } = await supabase
         .from("projects")
-        .insert(dataToInsert)
+        .insert(dataToInsert as any)
         .select()
         .single();
 
       if (error) throw error;
       return data;
     },
-    onSuccess: (data) => {
+    onSuccess: (data: any) => {
       toast.success("Project created successfully");
       queryClient.invalidateQueries({ queryKey: ["projects"] });
       queryClient.invalidateQueries({ queryKey: ["client", data.client_id] });
-      navigate({ to: `/admin/projects/${data.id}` });
+      navigate({ to: `/admin/projects/${data.id}` } as any);
     },
     onError: (error) => {
       toast.error(`Error: ${error.message}`);

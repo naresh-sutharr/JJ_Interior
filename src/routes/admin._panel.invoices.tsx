@@ -4,7 +4,7 @@ import { useRows, useBusinessProfile } from "@/hooks/use-admin";
 
 
 import { Search, Eye, Download, X, Calendar, CreditCard, ChevronDown, Award, FileText, LayoutGrid, CheckCircle, Edit2, Share2 } from 'lucide-react';
-import { GaneshaSVG, SofaSVG, BillHeaderLogo } from './admin.billing';
+import { GaneshaSVG, SofaSVG, BillHeaderLogo } from './admin._panel.billing';
 import { logoBase64 } from '@/utils/logoBase64';
 import { downloadPDF } from '@/utils/pdfExport';
 

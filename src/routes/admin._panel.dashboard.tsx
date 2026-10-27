@@ -3,7 +3,7 @@ import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useRows, useBusinessProfile } from "@/hooks/use-admin";
 import { toast } from "sonner";
 import { Users, IndianRupee, ShieldAlert, ArrowRight, FileSpreadsheet, Eye, Download, X, Calendar, CreditCard, Sparkles, FileText } from 'lucide-react';
-import { GaneshaSVG, SofaSVG } from './admin.billing';
+import { GaneshaSVG, SofaSVG } from './admin._panel.billing';
 import { logoBase64 } from '@/utils/logoBase64';
 import { downloadPDF } from '@/utils/pdfExport';
 

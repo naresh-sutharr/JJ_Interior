@@ -96,7 +96,7 @@ function QuotationsList() {
                   <TableCell>{new Date(q.quote_date).toLocaleDateString()}</TableCell>
                   <TableCell>
                     {q.client_id ? (
-                      <Link to={`/admin/clients/${q.client_id}`} className="hover:underline">
+                      <Link to={`/admin/clients/${q.client_id}` as any} className="hover:underline">
                         {q.clients?.name}
                       </Link>
                     ) : "-"}
@@ -109,7 +109,7 @@ function QuotationsList() {
                   </TableCell>
                   <TableCell className="text-right">
                     <Button variant="ghost" size="sm" asChild>
-                      <Link to={`/admin/quotations/${q.id}`}>View</Link>
+                      <Link to={`/admin/quotations/${q.id}` as any}>View</Link>
                     </Button>
                   </TableCell>
                 </TableRow>

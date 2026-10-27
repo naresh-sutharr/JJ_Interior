@@ -219,7 +219,6 @@ function Billing() {
         setSections(draftInvoice.sections);
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Calculate grand total function used everywhere

@@ -23,7 +23,7 @@ function QuotationView() {
           projects (name),
           quotation_items (*)
         `)
-        .eq("id", quotationId)
+        .eq("id", quotationId!)
         .single();
       if (error) throw error;
       return data;

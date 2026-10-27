@@ -57,7 +57,7 @@ type QuotationFormValues = z.infer<typeof quotationSchema>;
 function NewQuotation() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const searchParams = Route.useSearch<{ clientId?: string; projectId?: string }>();
+  const searchParams: any = Route.useSearch();
 
   const { data: clients } = useQuery({
     queryKey: ["clients"],
@@ -84,7 +84,7 @@ function NewQuotation() {
   });
 
   const form = useForm<QuotationFormValues>({
-    resolver: zodResolver(quotationSchema),
+    resolver: zodResolver(quotationSchema) as any,
     defaultValues: {
       client_id: searchParams.clientId || "",
       project_id: searchParams.projectId || "",

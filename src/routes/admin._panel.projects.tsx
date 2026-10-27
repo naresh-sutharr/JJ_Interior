@@ -75,7 +75,7 @@ function ProjectsList() {
 
             return (
               <Link
-                to={`/admin/projects/${project.id}`}
+                to={`/admin/projects/${project.id}` as any}
                 key={project.id}
                 className="glass-card rounded-2xl p-5 border border-slate-200/60 glass-card-hover group relative flex flex-col justify-between active:scale-[0.98] transition-transform"
               >

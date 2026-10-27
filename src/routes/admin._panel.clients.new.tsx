@@ -66,17 +66,17 @@ function NewClient() {
       };
       const { data, error } = await supabase
         .from("clients")
-        .insert(dataToInsert)
+        .insert(dataToInsert as any)
         .select()
         .single();
 
       if (error) throw error;
       return data;
     },
-    onSuccess: (data) => {
+    onSuccess: (data: any) => {
       toast.success("Client created successfully");
       queryClient.invalidateQueries({ queryKey: ["clients"] });
-      navigate({ to: `/admin/clients/${data.id}` });
+      navigate({ to: `/admin/clients/${data.id}` } as any);
     },
     onError: (error) => {
       toast.error(`Error: ${error.message}`);
